@@ -1,0 +1,147 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "id_uni": 1,
+      "id_pos": 1,
+      "fio_emp": "Антон Волков Воркович",
+      "adress_emp": "Дом 13 кв. 26",
+      "phone_emp": "895233499344"
+    },
+    {
+      "id": 2,
+      "id_uni": 1,
+      "id_pos": 2,
+      "fio_emp": "Василий Волков Воркович",
+      "adress_emp": "Дом 14 кв. 26",
+      "phone_emp": "895233499344"
+    },
+    {
+      "id": 3,
+      "id_uni": 1,
+      "id_pos": 1,
+      "fio_emp": "Дмитрий Волков Воркович",
+      "adress_emp": "Дом 15 кв. 26",
+      "phone_emp": "895233499344"
+    }
+  ],
+  "posts": [
+    {
+      "id": 1,
+      "post_name": "Отдел кадров"
+    },
+    {
+      "id": 2,
+      "post_name": "Бухгалтерия"
+    }
+  ],
+  "units": [
+    {
+      "id": 1,
+      "unit_name": "сотрудник"
+    }
+  ],
+  "organisations": [
+    {
+      "id": 1,
+      "org_name": "Картошка исндастрис",
+      "org_adress": "дом улица фонарь",
+      "org_phone": "88005553535",
+      "org_email": "kartoshka.rr@gmail.com"
+    }
+  ],
+  "doc_vids": [
+    {
+      "id": 1,
+      "vid_name": "договор"
+    }
+  ],
+  "doc_types": [
+    {
+      "id": 1,
+      "typ_name": "договор"
+    }
+  ],
+  "documents": [
+    {
+      "id": 1,
+      "id_vid": 1,
+      "id_typ": 1,
+      "id_org": 1,
+      "id_use": 1,
+      "doc_number": 2344232,
+      "doc_name": "договор купли продажи",
+      "doc_register_date": "15.01.2015",
+      "doc_dispatch_date": "15.01.2015",
+      "doc_body": "some text",
+      "doc_note": "more text"
+    },
+    {
+      "id": 2,
+      "id_vid": 1,
+      "id_typ": 1,
+      "id_org": 1,
+      "id_use": 2,
+      "doc_number": 2344232,
+      "doc_name": "договор купли продажи",
+      "doc_register_date": "15.01.2015",
+      "doc_dispatch_date": "15.01.2015",
+      "doc_body": "some text",
+      "doc_note": "more text"
+    },
+    {
+      "id": 3,
+      "id_vid": 1,
+      "id_typ": 3,
+      "id_org": 1,
+      "id_use": 1,
+      "doc_number": 2344232,
+      "doc_name": "договор купли продажи",
+      "doc_register_date": "15.01.2015",
+      "doc_dispatch_date": "15.01.2015",
+      "doc_body": "some text",
+      "doc_note": "more text"
+    }
+  ],
+  "ready_doc": [
+    {
+      "id": 1,
+      "vid_doc": "договор",
+      "typ_doc": "договор",
+      "org_name": "Картошка исндастрис",
+      "use_fio": "Антон Волков Воркович",
+      "doc_number": 2344232,
+      "doc_name": "договор купли продажи",
+      "doc_register_date": "15.01.2015",
+      "doc_dispatch_date": "15.01.2015",
+      "doc_body": "some text",
+      "doc_note": "more text"
+    },
+    {
+      "id": 2,
+      "vid_doc": "договор",
+      "typ_doc": "договор",
+      "org_name": "Картошка исндастрис",
+      "use_fio": "Василий Волков Воркович",
+      "doc_number": 2344232,
+      "doc_name": "договор купли продажи",
+      "doc_register_date": "15.01.2015",
+      "doc_dispatch_date": "15.01.2015",
+      "doc_body": "some text",
+      "doc_note": "more text"
+    },
+    {
+      "id": 3,
+      "vid_doc": "договор",
+      "typ_doc": "договор",
+      "org_name": "Картошка исндастрис",
+      "use_fio": "Дмитрий Волков Воркович",
+      "doc_number": 2344232,
+      "doc_name": "договор купли продажи",
+      "doc_register_date": "15.01.2015",
+      "doc_dispatch_date": "15.01.2015",
+      "doc_body": "some text",
+      "doc_note": "more text"
+    }
+  ]
+}

@@ -1,20 +1,23 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
-import ShowValidCredentials from '../showValidCredentials/showValidCredentials'
+import ShowValidCredentials from '../showValidCredentials/showValidCredentials';
+import AuthenticationService from '../../../../services/authentication.js';
 
 export default class LoginComponent extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            userName: 'UserName',
-            password: 'Password',
-            hasLoginFaild: false,
+            userName: 'in28minutes',
+            password: 'dummy',
+            hasLoginFailed: false,
             showSucsessMessage: false
         }
         this.handleChange = this.handleChange.bind(this);
         this.loginClicked = this.loginClicked.bind(this);
     }
+
+
 
     handleChange(event) {
         this.setState({
@@ -24,18 +27,25 @@ export default class LoginComponent extends Component {
     }
 
     loginClicked() {
-        if (this.state.userName === 'UserName' && this.state.password === 'Password') {
-            this.props.history.push(`/welcome/${this.state.userName}`);
-        } else {
-            console.log('failed');
-            this.setState({ hasLoginFaild: true });
-        }
+        AuthenticationService
+            .executeJwtAuthentificationService(this.state.userName, this.state.password)
+            .then((response) => {
+                AuthenticationService
+                .registerSuccessfulLoginForJwt(this.state.userName, response.data.token);
+                this.props.history.push(`/welcome/${this.state.userName}`);
+            }).catch((e) => {
+                console.error(e);
+                this.setState({ showSuccessMessage: false });
+                this.setState({ hasLoginFailed: true });
+            });
     }
 
     render() {
         return (
             <div>
-                <ShowValidCredentials hasLoginFaild={this.state.hasLoginFaild} />
+                <h1>Login</h1>
+                <div className='container'></div>
+                <ShowValidCredentials hasLoginFailed={this.state.hasLoginFailed} />
                 User name: <input
                     type='text'
                     name='userName'
@@ -48,7 +58,7 @@ export default class LoginComponent extends Component {
                     value={this.state.password}
                     onChange={this.handleChange}
                 />
-                <button onClick={this.loginClicked}>Loggin</button>
+                <button className='btn btn-success' onClick={this.loginClicked}>Loggin</button>
             </div>
         );
     }

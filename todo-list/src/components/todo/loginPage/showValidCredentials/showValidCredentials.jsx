@@ -1,8 +1,8 @@
 import React from 'react';
 
 function ShowValidCredentials(props) {
-    if (props.hasLoginFaild) {
-        return <div>Invalid credentials</div>
+    if (props.hasLoginFailed) {
+        return <div className='alert alert-warning'>Invalid credentials</div>
     }
     return null;
 }
