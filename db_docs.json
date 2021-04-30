@@ -62,47 +62,7 @@
       "typ_name": "договор"
     }
   ],
-  "documents": [
-    {
-      "id": 1,
-      "id_vid": 1,
-      "id_typ": 1,
-      "id_org": 1,
-      "id_use": 1,
-      "doc_number": 2344232,
-      "doc_name": "договор купли продажи",
-      "doc_register_date": "15.01.2015",
-      "doc_dispatch_date": "15.01.2015",
-      "doc_body": "some text",
-      "doc_note": "more text"
-    },
-    {
-      "id": 2,
-      "id_vid": 1,
-      "id_typ": 1,
-      "id_org": 1,
-      "id_use": 2,
-      "doc_number": 2344232,
-      "doc_name": "договор купли продажи",
-      "doc_register_date": "15.01.2015",
-      "doc_dispatch_date": "15.01.2015",
-      "doc_body": "some text",
-      "doc_note": "more text"
-    },
-    {
-      "id": 3,
-      "id_vid": 1,
-      "id_typ": 3,
-      "id_org": 1,
-      "id_use": 1,
-      "doc_number": 2344232,
-      "doc_name": "договор купли продажи",
-      "doc_register_date": "15.01.2015",
-      "doc_dispatch_date": "15.01.2015",
-      "doc_body": "some text",
-      "doc_note": "more text"
-    }
-  ],
+  "documents": [],
   "ready_doc": [
     {
       "id": 1,

@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
+import Select from 'react-select';
 
 import '../../../../bootatrap.css';
 
-import todoDataService from '../../../../api/todo/todoDataService.js';
+import todoDataService from '../../../../api/documet/documentDataService.js';
 import AuthentificationService from '../../../../services/authentication.js';
 
 export default class TodoComponent extends Component {
@@ -13,71 +14,117 @@ export default class TodoComponent extends Component {
         super(props);
 
         this.state = {
-            id: this.props.match.params.id,
-            description: '',
-            targetDate: moment(new Date()).format('YYYY-MM-DD')
+            id: +this.props.match.params.id,
+            doc_name: '',
+            doc_body: '',
+            doc_note: '',
+            doc_number: '',
+            doc_register_date: moment(new Date()).format('YYYY-MM-DD'),
+            doc_dispatch_date: moment(new Date()).format('YYYY-MM-DD'),
+            users: [],
+            vids: [],
+            types: [],
+            organisations: []
         }
 
         this.onSubmit = this.onSubmit.bind(this);
-        this.validate = this.validate.bind(this);
+        //this.validate = this.validate.bind(this);
     }
 
     componentDidMount() {
 
+        let users = todoDataService.retriveAllFio(),
+            vids = todoDataService.retriveAllVidsName(),
+            types = todoDataService.retriveAllTypesName(),
+            organisations = todoDataService.retriveAllOrganisationsName();
+
+        this.setState({
+            users,
+            vids ,
+            types,
+            organisations
+        })
+
         if (this.state.id === -1) {
             return
         }
-
-        let userName = AuthentificationService.getLoggedInUserName();
-        todoDataService.retriveTodo(userName, this.state.id)
+  
+        todoDataService.retriveDocument(this.state.id)
             .then(response => {
                 this.setState({
-                    description: response.data.description,
-                    targetDate: moment(response.data.targetDate).format('YYYY-MM-DD')
+                    doc_name: response.data.doc_name,
+                    doc_body: response.data.doc_body,
+                    doc_note: response.data.doc_note,
+                    doc_number: response.data.doc_number,
+                    doc_register_date: moment(response.data.doc_register_date).format('YYYY-MM-DD'),
+                    doc_dispatch_date: moment(response.data.doc_dispatch_date).format('YYYY-MM-DD')
                 });
             });
     }
 
     onSubmit(values) {
 
-        let userName = AuthentificationService.getLoggedInUserName();
-            let todo = {
-                id: this.state.id,
-                description: values.description,
-                targetDate: values.targetDate
-            }
+        let document = {
+            "id": this.state.id,
+            "doc_body": values.doc_body,
+            "targetDate": values.targetDate,
+            "vid_doc": values.vid_doc,
+            "typ_doc": values.typ_doc,
+            "org_name": values.org_name,
+            "use_fio": values.id_use,
+            "doc_number": values.doc_number,
+            "doc_name": values.doc_name,
+            "doc_register_date": values.doc_register_date,
+            "doc_dispatch_date": values.doc_dispatch_date,
+            "doc_note": values.doc_note
+        }
+
+        let newDocument = {
+            "vid_doc": values.vid_doc,
+            "typ_doc": values.typ_doc,
+            "org_name": values.org_name,
+            "use_fio": values.id_use,
+            "doc_number": values.doc_number,
+            "doc_name": values.doc_name,
+            "doc_register_date": values.doc_register_date,
+            "doc_dispatch_date": values.doc_dispatch_date,
+            "doc_body": values.doc_body,
+            "doc_note": values.doc_note
+        }
 
         if (this.state.id === -1) {
-            todoDataService.createTodo(userName, todo ).then(() => {
-                this.props.history.push('/todos');
+            todoDataService.createDocument(newDocument).then(() => {
+                this.props.history.push('/documents');
             });
         } else {
-            todoDataService.updateTodo(userName, this.state.id, todo)
-            .then(() => {
-                this.props.history.push('/todos');
-            });
+            todoDataService.updateDocument(this.state.id, document)
+                .then(() => {
+                    this.props.history.push('/documents');
+                });
         }
     }
 
-    validate(values) { // должен возвращать ошибку
-        let errors = {};
-        if (!values.description) {
-            errors.description = 'Enter description';
-        } else if (values.description.length < 5) {
-            errors.description = 'Enter atleast 5 characters in descriptin';
-        }
+    // validate(values) { // должен возвращать ошибку
+    //     let errors = {};
+    //     if (!values.description) {
+    //         errors.description = 'Enter description';
+    //     } else if (values.description.length < 5) {
+    //         errors.description = 'Enter atleast 5 characters in descriptin';
+    //     }
 
-        if (!moment(values.targetDate).isValid()) {
-            errors.targetDate = 'Enter a valid target date';
-        }
+    //     if (!moment(values.targetDate).isValid()) {
+    //         errors.targetDate = 'Enter a valid target date';
+    //     }
 
-        return errors;
-    }
+    //     return errors;
+    // }
 
     render() {
-        let description = this.state.description;
-        let targetDate = this.state.targetDate;
-
+        let doc_name = this.state.doc_name,
+            doc_body = this.state.doc_body,
+            doc_note = this.state.doc_note,
+            doc_register_date = this.state.doc_register_date,
+            doc_dispatch_date = this.state.doc_dispatch_date;
 
 
         return (
@@ -86,14 +133,18 @@ export default class TodoComponent extends Component {
                 <div className='container'>
                     <Formik initialValues={
                         {
-                            description,
-                            targetDate
+                            doc_name,
+                            doc_body,
+                            doc_note,
+                            doc_register_date,
+                            doc_dispatch_date,
+
                         }
                     }
                         validateOnChange={false}
                         validateOnBlur={false}
                         onSubmit={this.onSubmit}
-                        validate={this.validate}
+                        //validate={this.validate}
                         enableReinitialize={true}>
                         {
                             (props) => (
@@ -107,13 +158,46 @@ export default class TodoComponent extends Component {
                                         component='div'
                                         className='alert alert-warning' />
                                     <fieldset className='form-group'>
-                                        <label>Description</label>
-                                        <Field className='form-control' type='text' name='description' />
+                                        <label>Номер документа</label>
+                                        <Field className='form-control' type='text' name='doc_number' />
                                     </fieldset>
                                     <fieldset className='form-group'>
-                                        <label>Target date</label>
-                                        <Field className='form-control' type='date' name='targetDate' />
+                                        <label>Название документа</label>
+                                        <Field className='form-control' type='text' name='doc_name' />
                                     </fieldset>
+                                    <fieldset className='form-group'>
+                                        <label>Описание</label>
+                                        <Field className='form-control' type='text' name='doc_body' />
+                                    </fieldset>
+                                    <fieldset className='form-group'>
+                                        <label>Примечание</label>
+                                        <Field className='form-control' type='text' name='doc_note' />
+                                    </fieldset>
+                                    <fieldset className='form-group'>
+                                        <label>Дата создания</label>
+                                        <Field className='form-control' type='date' name='doc_register_date' />
+                                    </fieldset>
+                                    <fieldset className='form-group'>
+                                        <label>Дата отправки</label>
+                                        <Field className='form-control' type='date' name='doc_dispatch_date' />
+                                    </fieldset>
+                                    <fieldset className='form-group'>
+                                        <label>Составитель</label>
+                                        <Select options={this.state.users} name='id_use' value={this.state.id_use} />
+                                    </fieldset>
+                                    <fieldset className='form-group'>
+                                        <label>Вид документа</label>
+                                        <Select options={this.state.vids} name='id_vid' value={this.state.id_vid} />
+                                    </fieldset>
+                                    <fieldset className='form-group'>
+                                        <label>Тип документа</label>
+                                        <Select options={this.state.types} name='id_typ' value={this.state.id_typ} />
+                                    </fieldset>
+                                    <fieldset className='form-group'>
+                                        <label>Организация</label>
+                                        <Select options={this.state.organisations} name='id_org' value={this.state.id_org} />
+                                    </fieldset>
+
                                     <button type='submit' className='btn btn-success'>Save</button>
                                 </Form>
                             )

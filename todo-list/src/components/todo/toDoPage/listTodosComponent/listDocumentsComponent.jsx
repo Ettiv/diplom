@@ -1,14 +1,13 @@
-import moment from 'moment';
 import React, { Component } from 'react';
 
-import TodoDataService from '../../../../api/todo/todoDataService.js';
-import AuthentificationService from '../../../../services/authentication.js';
+import TodoDataService from '../../../../api/documet/documentDataService.js';
+import '../../../../bootatrap.css';
 
 export default class ListTodosComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            todos: [],
+            documents: [],
             message:null
         }
         this.deleteTodoClicked = this.deleteTodoClicked.bind(this);
@@ -22,8 +21,7 @@ export default class ListTodosComponent extends Component {
     }
 
     deleteTodoClicked(id) {
-        let userName = AuthentificationService.getLoggedInUserName();
-        TodoDataService.deleteTodo(userName, id)
+        TodoDataService.deleteTodo(id)
         .then(
             response => {
                 this.setState({
@@ -35,19 +33,18 @@ export default class ListTodosComponent extends Component {
     }
 
     updateTodoClicked(id) {
-        this.props.history.push(`/todos/${id}`);
+        this.props.history.push(`/documents/${id}`);
     }
 
     addTodoClicked() {
-        this.props.history.push(`/todos/-1`);
+        this.props.history.push(`/documents/-1`);
     }
 
     refreshTodos(){
-        let userName = AuthentificationService.getLoggedInUserName();
-        TodoDataService.retriveAllTodos(userName)
+        TodoDataService.retriveAllDocuments()
             .then((response) => {
                 this.setState({
-                    todos: response.data
+                    documents: response.data
                 });
             })
     }
@@ -56,35 +53,40 @@ export default class ListTodosComponent extends Component {
 
         return (
             <div>
-                <h1>List Todos</h1>
-                <div className='alert alert-sucsess'>{this.state.message}</div>
+                <h1>Документы</h1>
+                {this.state.message ? <div className='alert alert-success'>{this.state.message}</div> : null}
                 <div className='container'>
                     <table className='table'>
                         <thead>
                             <tr>
-                                <th>description</th>
-                                <th>Target date</th>
-                                <th>Done</th>
-                                <th>Edit</th>
+                                <th>Код документа</th>
+                                <th>Название документа</th>
+                                <th>Тип документа</th>
+                                <th>Дата создания</th>
                                 <th>Delete</th>
+                                <th>Update</th>
+
                             </tr>
                         </thead>
                         <tbody>
-                            {this.state.todos.map(todo => {
+                            {this.state.documents.map(document => {
                                 return (
-                                    <tr key={todo.id}>
-                                        <td>{todo.description}</td>
-                                        <td>{todo.done.toString()}</td>
+                                    <tr key={document.id}>
+                                        <td>{document.doc_number}</td>
+                                        <td>{document.doc_name}</td>
+                                        <td>{document.id_typ}</td>
+                                        <td>{document.doc_register_date}</td>
                                         <td><button 
                                             className='btn btn-success' 
-                                            onClick={ () => this.updateTodoClicked(todo.id)}>
+                                            onClick={ () => this.updateTodoClicked(document.id)}>
                                                 Update
                                             </button>
                                         </td>
-                                        <td>{moment(todo.targetDate).format('YYYY-MM-DD')}</td>   
+                                        {/* <td>{moment(document.doc_register_date).format('YYYY-MM-DD')}</td>    */}
+                                        
                                         <td><button 
                                             className='btn btn-warning' 
-                                            onClick={ () => this.deleteTodoClicked(todo.id)}>
+                                            onClick={ () => this.deleteTodoClicked(document.id)}>
                                                 Delete
                                             </button>
                                         </td>

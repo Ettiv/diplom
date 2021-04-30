@@ -8,7 +8,7 @@ class WelcomeComponent extends Component {
                 <h1>Welcome!</h1>
                 <div className='container'>
                     <div>Welcome to the welcome page, {this.props.match.params.name}</div>
-                    <div>You can manage your todos <Link to='/todos'>here</Link></div>
+                    <div>You can manage your documents <Link to='/documents'>here</Link></div>
                 </div>
                 <div className='container'>
                     <div>Welcome to the welcome page, {this.props.match.params.name}</div>
