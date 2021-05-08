@@ -4,7 +4,8 @@ import {
     JPA_API_URL
 } from '../../constants/constants.js';
 
-class TodoDataService {
+class DocumentDataService {
+
     retriveAllDocuments() {
         return axios.get(`${JPA_API_URL}/documents`);
     }
@@ -42,25 +43,27 @@ class TodoDataService {
     }
 
     retriveAllFio = async () => {
+        let users=[];
         const res = await this.retriveAllUsers();
-        let users = [];
         res.data.forEach(user => {
-            users.push({
-                value: user.id,
-                label: user.fio_emp
-            })
-        });
+                users.push({
+                    value: user.id,
+                    label: user.fio_emp
+                })
+            });
         return users;
     }
 
-    retriveAllVidsName = async () => {
-        const res = await this.retriveAllVids();
+    retriveAllVidsName = () => {
+        const res = this.retriveAllVids();
         let vids = [];
-        res.data.forEach(vid => {
-            vids.push({
-                value: vid.id,
-                label: vid.vid_name
-            })
+        res.then(answer=>{
+            answer.data.forEach(vid => {
+                vids.push({
+                    value: vid.id,
+                    label: vid.vid_name
+                })
+            });
         });
         return vids;
     }
@@ -91,4 +94,4 @@ class TodoDataService {
 }
 
 
-export default new TodoDataService();
+export default new DocumentDataService();

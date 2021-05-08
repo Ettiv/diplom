@@ -1,11 +1,12 @@
 import React from 'react';
 import {Field,ErrorMessage} from 'formik'; 
 
+import '../../../../bootatrap.css';
+
 function CustomSelect(props){
-    const {lable,name,options,...rest} = props;
+    const {name,options,...rest} = props;
     return (
         <div className='form-control'>
-            <lable htmlFor={name}>{lable}</lable>
             <Field as='select' id={name} name={name} {...rest}>
                 {
                     options.map(option => {

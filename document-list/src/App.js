@@ -1,4 +1,4 @@
-import TodoApp from './components/todo/TodoApp';
+import TodoApp from './components/document/TodoApp';
 import React from 'react';
 import './bootatrap.css';
 import './App.css';

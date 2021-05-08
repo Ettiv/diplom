@@ -73,41 +73,14 @@
       "id": 1
     },
     {
-      "id": 2,
-      "doc_body": "",
-      "doc_number": "",
-      "doc_name": "sdfds",
-      "doc_register_date": "2021-05-07",
-      "doc_dispatch_date": "2021-05-07",
-      "doc_note": "sdfsdfsf"
-    },
-    {
-      "id": 3,
-      "doc_body": "",
+      "use_fio": "",
       "doc_number": "",
       "doc_name": "",
       "doc_register_date": "2021-05-08",
       "doc_dispatch_date": "2021-05-08",
-      "doc_note": ""
-    },
-    {
-      "doc_number": "sdfsf",
-      "doc_name": "sdfsf",
-      "doc_register_date": "2021-05-08",
-      "doc_dispatch_date": "2021-05-08",
-      "doc_body": "sdfsf",
-      "doc_note": "sdfsf",
-      "id": 4
-    },
-    {
-      "id": 5,
-      "doc_body": "dsfs",
-      "use_fio": "2",
-      "doc_number": "sadfsf",
-      "doc_name": "sdfsdf",
-      "doc_register_date": "2021-05-08",
-      "doc_dispatch_date": "2021-05-08",
-      "doc_note": "sdfsf"
+      "doc_body": "",
+      "doc_note": "",
+      "id": 2
     }
   ],
   "ready_doc": [

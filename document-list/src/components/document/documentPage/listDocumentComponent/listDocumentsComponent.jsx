@@ -3,44 +3,44 @@ import React, { Component } from 'react';
 import TodoDataService from '../../../../api/documet/documentDataService.js';
 import '../../../../bootatrap.css';
 
-export default class ListTodosComponent extends Component {
+export default class ListDocumentComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
             documents: [],
             message:null
         }
-        this.deleteTodoClicked = this.deleteTodoClicked.bind(this);
-        this.refreshTodos = this.refreshTodos.bind(this);
-        this.updateTodoClicked = this.updateTodoClicked.bind(this);
-        this.addTodoClicked = this.addTodoClicked.bind(this);
+        this.deleteDocumentClicked = this.deleteDocumentClicked.bind(this);
+        this.refreshDocuments = this.refreshDocuments.bind(this);
+        this.updateDocumentClicked = this.updateDocumentClicked.bind(this);
+        this.addDocumentClicked = this.addDocumentClicked.bind(this);
     }
 
     componentDidMount() {
-        this.refreshTodos();
+        this.refreshDocuments();
     }
 
-    deleteTodoClicked(id) {
+    deleteDocumentClicked(id) {
         TodoDataService.deleteTodo(id)
         .then(
             response => {
                 this.setState({
                     message: `Delete of todo ${id} is sucsessful`
                 });
-                this.refreshTodos();
+                this.refreshDocuments();
             }
         )
     }
 
-    updateTodoClicked(id) {
+    updateDocumentClicked(id) {
         this.props.history.push(`/documents/${id}`);
     }
 
-    addTodoClicked() {
+    addDocumentClicked() {
         this.props.history.push(`/documents/-1`);
     }
 
-    refreshTodos(){
+    refreshDocuments(){
         TodoDataService.retriveAllDocuments()
             .then((response) => {
                 this.setState({
@@ -78,7 +78,7 @@ export default class ListTodosComponent extends Component {
                                         <td>{document.doc_register_date}</td>
                                         <td><button 
                                             className='btn btn-success' 
-                                            onClick={ () => this.updateTodoClicked(document.id)}>
+                                            onClick={ () => this.updateDocumentClicked(document.id)}>
                                                 Update
                                             </button>
                                         </td>
@@ -86,7 +86,7 @@ export default class ListTodosComponent extends Component {
                                         
                                         <td><button 
                                             className='btn btn-warning' 
-                                            onClick={ () => this.deleteTodoClicked(document.id)}>
+                                            onClick={ () => this.deleteDocumentClicked(document.id)}>
                                                 Delete
                                             </button>
                                         </td>
@@ -98,7 +98,7 @@ export default class ListTodosComponent extends Component {
                     <div className='row'>
                             <button 
                             className='btn btn-success'
-                            onClick={this.addTodoClicked}>
+                            onClick={this.addDocumentClicked}>
                                 Add
                             </button>
                     </div>

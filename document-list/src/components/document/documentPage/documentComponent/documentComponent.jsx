@@ -9,7 +9,7 @@ import '../../../../bootatrap.css';
 
 import todoDataService from '../../../../api/documet/documentDataService.js';
 
-export default class TodoComponent extends Component {
+export default class DocumentComponent extends Component {
 
     constructor(props) {
         super(props);
@@ -22,24 +22,10 @@ export default class TodoComponent extends Component {
             doc_number: '',
             doc_register_date: moment(new Date()).format('YYYY-MM-DD'),
             doc_dispatch_date: moment(new Date()).format('YYYY-MM-DD'),
-            users: [
-                {
-                    value:'',
-                    label:'выберите составителя'
-                },
-                {
-                    "value": 1,
-                    "lable": "Антон Волков Воркович"
-                },
-                {
-                    "value": 2,    
-                    "lable": "Василий Волков Воркович"    
-                },
-                {
-                    "value": 3, 
-                    "lable": "Дмитрий Волков Воркович",
-                }
-            ],
+            users: [{
+                value:'1',
+                lable:'222'
+            }],
             vids: [],
             types: [],
             organisations: []
@@ -52,13 +38,12 @@ export default class TodoComponent extends Component {
     componentDidMount() {
 
         let 
-            //users = todoDataService.retriveAllFio(),
+            users = todoDataService.retriveAllFio(),
             vids = todoDataService.retriveAllVidsName(),
             types = todoDataService.retriveAllTypesName(),
             organisations = todoDataService.retriveAllOrganisationsName();
 
-        console.log(//users, 
-            vids, types, organisations);
+        console.log(users,vids, types, organisations);
 
         this.setState({
             //users,
@@ -222,8 +207,8 @@ export default class TodoComponent extends Component {
                                             name='doc_dispatch_date' />
                                     </fieldset>
                                     <fieldset className='form-group'>
+                                        <lable >Составитель</lable>
                                         <CustomSelect 
-                                            lable="Составитель"
                                             options={this.state.users}
                                             name= 'users' />
                                     </fieldset>
