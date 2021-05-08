@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
+// import * as Yup from 'yup';
+
 import CustomSelect from '../customSelect/customSelect';
 
 import '../../../../bootatrap.css';
@@ -21,7 +23,18 @@ export default class TodoComponent extends Component {
             doc_register_date: moment(new Date()).format('YYYY-MM-DD'),
             doc_dispatch_date: moment(new Date()).format('YYYY-MM-DD'),
             users: [
-
+                {
+                    "value": 1,
+                    "lable": "Антон Волков Воркович"
+                },
+                {
+                    "value": 2,    
+                    "lable": "Василий Волков Воркович"    
+                },
+                {
+                    "value": 3, 
+                    "lable": "Дмитрий Волков Воркович",
+                }
             ],
             vids: [],
             types: [],
@@ -34,15 +47,17 @@ export default class TodoComponent extends Component {
 
     componentDidMount() {
 
-        let users = todoDataService.retriveAllFio(),
+        let 
+            //users = todoDataService.retriveAllFio(),
             vids = todoDataService.retriveAllVidsName(),
             types = todoDataService.retriveAllTypesName(),
             organisations = todoDataService.retriveAllOrganisationsName();
-        
-        console.log(users,vids,types,organisations);
+
+        console.log(//users, 
+            vids, types, organisations);
 
         this.setState({
-            users,
+            //users,
             vids,
             types,
             organisations
@@ -107,6 +122,7 @@ export default class TodoComponent extends Component {
         }
     }
 
+    
     // validate(values) { // должен возвращать ошибку
     //     let errors = {};
     //     if (!values.description) {
@@ -124,6 +140,10 @@ export default class TodoComponent extends Component {
 
     render() {
 
+        // const validationSchema = Yup.object({
+        //     users: Yup.string().required('Required')
+        // })
+
         return (
             <div>
                 <h1>Todo</h1>
@@ -136,7 +156,7 @@ export default class TodoComponent extends Component {
                             doc_register_date: this.state.doc_register_date,
                             doc_dispatch_date: this.state.doc_dispatch_date,
                             doc_number: this.state.doc_number,
-                            users: this.state.users,
+                            users: '',
                             vids: this.state.vids,
                             types: this.state.types,
                             organisations: this.state.organisations
@@ -146,6 +166,7 @@ export default class TodoComponent extends Component {
                         validateOnBlur={false}
                         onSubmit={this.onSubmit}
                         //validate={this.validate}
+                        // validationSchema={validationSchema}
                         enableReinitialize={true}>
                         {
                             (props) => (
@@ -160,47 +181,47 @@ export default class TodoComponent extends Component {
                                         className='alert alert-warning' /> */}
                                     <fieldset className='form-group'>
                                         <label>Номер документа</label>
-                                        <Field className='form-control' 
-                                        type='text' 
-                                        name='doc_number' />
+                                        <Field className='form-control'
+                                            type='text'
+                                            name='doc_number' />
                                     </fieldset>
                                     <fieldset className='form-group'>
                                         <label>Название документа</label>
-                                        <Field className='form-control' 
-                                        type='text' 
-                                        name='doc_name' />
+                                        <Field className='form-control'
+                                            type='text'
+                                            name='doc_name' />
                                     </fieldset>
                                     <fieldset className='form-group'>
                                         <label>Описание</label>
-                                        <Field className='form-control' 
-                                        type='text' 
-                                        name='doc_body' />
+                                        <Field className='form-control'
+                                            type='text'
+                                            name='doc_body' />
                                     </fieldset>
                                     <fieldset className='form-group'>
                                         <label>Примечание</label>
-                                        <Field className='form-control' 
-                                        type='text' 
-                                        name='doc_note' />
+                                        <Field className='form-control'
+                                            type='text'
+                                            name='doc_note' />
                                     </fieldset>
                                     <fieldset className='form-group'>
                                         <label>Дата создания</label>
-                                        <Field className='form-control' 
-                                        type='date' 
-                                        name='doc_register_date' />
+                                        <Field className='form-control'
+                                            type='date'
+                                            name='doc_register_date' />
                                     </fieldset>
                                     <fieldset className='form-group'>
                                         <label>Дата отправки</label>
-                                        <Field className='form-control' 
-                                        type='date' 
-                                        name='doc_dispatch_date' />
+                                        <Field className='form-control'
+                                            type='date'
+                                            name='doc_dispatch_date' />
                                     </fieldset>
                                     <fieldset className='form-group'>
-                                        <label>Составитель</label>
-                                        <CustomSelect options={this.state.users} 
-                                        onChange={value=>Formik.setFieldValue('job',value.value)} 
-                                        value={this.state.id_use} />
+                                        <CustomSelect 
+                                            lable="Составитель"
+                                            options={this.state.users}
+                                            name= 'users' />
                                     </fieldset>
-                                    <fieldset className='form-group'>
+                                    {/* <fieldset className='form-group'>
                                         <label>Вид документа</label>
                                         <CustomSelect options={this.state.vids} 
                                         name='id_vid' 
@@ -217,7 +238,7 @@ export default class TodoComponent extends Component {
                                         <CustomSelect options={this.state.organisations} 
                                         name='id_org' 
                                         value={this.state.id_org} />
-                                    </fieldset>
+                                    </fieldset> */}
 
                                     <button type='submit' className='btn btn-success'>Save</button>
                                 </Form>
