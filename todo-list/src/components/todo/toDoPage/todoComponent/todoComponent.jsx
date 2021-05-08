@@ -24,6 +24,10 @@ export default class TodoComponent extends Component {
             doc_dispatch_date: moment(new Date()).format('YYYY-MM-DD'),
             users: [
                 {
+                    value:'',
+                    label:'выберите составителя'
+                },
+                {
                     "value": 1,
                     "lable": "Антон Волков Воркович"
                 },
@@ -89,7 +93,7 @@ export default class TodoComponent extends Component {
             "vid_doc": values.vid_doc,
             "typ_doc": values.typ_doc,
             "org_name": values.org_name,
-            "use_fio": values.id_use,
+            "use_fio": values.users,
             "doc_number": values.doc_number,
             "doc_name": values.doc_name,
             "doc_register_date": values.doc_register_date,
@@ -101,7 +105,7 @@ export default class TodoComponent extends Component {
             "vid_doc": values.vid_doc,
             "typ_doc": values.typ_doc,
             "org_name": values.org_name,
-            "use_fio": values.id_use,
+            "use_fio": values.users,
             "doc_number": values.doc_number,
             "doc_name": values.doc_name,
             "doc_register_date": values.doc_register_date,
@@ -120,6 +124,8 @@ export default class TodoComponent extends Component {
                     this.props.history.push('/documents');
                 });
         }
+        console.log('Form data', values)
+        console.log('Saved data', JSON.parse(JSON.stringify(values)))
     }
 
     
@@ -157,9 +163,9 @@ export default class TodoComponent extends Component {
                             doc_dispatch_date: this.state.doc_dispatch_date,
                             doc_number: this.state.doc_number,
                             users: '',
-                            vids: this.state.vids,
-                            types: this.state.types,
-                            organisations: this.state.organisations
+                            // vids: this.state.vids,
+                            // types: this.state.types,
+                            // organisations: this.state.organisations
                         }
                     }
                         validateOnChange={false}
