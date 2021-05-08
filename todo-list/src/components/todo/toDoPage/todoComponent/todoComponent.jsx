@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
-import Select from 'react-select';
+import CustomSelect from '../customSelect/customSelect';
 
 import '../../../../bootatrap.css';
 
 import todoDataService from '../../../../api/documet/documentDataService.js';
-import AuthentificationService from '../../../../services/authentication.js';
 
 export default class TodoComponent extends Component {
 
@@ -21,7 +20,9 @@ export default class TodoComponent extends Component {
             doc_number: '',
             doc_register_date: moment(new Date()).format('YYYY-MM-DD'),
             doc_dispatch_date: moment(new Date()).format('YYYY-MM-DD'),
-            users: [],
+            users: [
+
+            ],
             vids: [],
             types: [],
             organisations: []
@@ -37,10 +38,12 @@ export default class TodoComponent extends Component {
             vids = todoDataService.retriveAllVidsName(),
             types = todoDataService.retriveAllTypesName(),
             organisations = todoDataService.retriveAllOrganisationsName();
+        
+        console.log(users,vids,types,organisations);
 
         this.setState({
             users,
-            vids ,
+            vids,
             types,
             organisations
         })
@@ -48,7 +51,7 @@ export default class TodoComponent extends Component {
         if (this.state.id === -1) {
             return
         }
-  
+
         todoDataService.retriveDocument(this.state.id)
             .then(response => {
                 this.setState({
@@ -120,12 +123,6 @@ export default class TodoComponent extends Component {
     // }
 
     render() {
-        let doc_name = this.state.doc_name,
-            doc_body = this.state.doc_body,
-            doc_note = this.state.doc_note,
-            doc_register_date = this.state.doc_register_date,
-            doc_dispatch_date = this.state.doc_dispatch_date;
-
 
         return (
             <div>
@@ -133,12 +130,16 @@ export default class TodoComponent extends Component {
                 <div className='container'>
                     <Formik initialValues={
                         {
-                            doc_name,
-                            doc_body,
-                            doc_note,
-                            doc_register_date,
-                            doc_dispatch_date,
-
+                            doc_name: this.state.doc_name,
+                            doc_body: this.state.doc_body,
+                            doc_note: this.state.doc_note,
+                            doc_register_date: this.state.doc_register_date,
+                            doc_dispatch_date: this.state.doc_dispatch_date,
+                            doc_number: this.state.doc_number,
+                            users: this.state.users,
+                            vids: this.state.vids,
+                            types: this.state.types,
+                            organisations: this.state.organisations
                         }
                     }
                         validateOnChange={false}
@@ -149,53 +150,73 @@ export default class TodoComponent extends Component {
                         {
                             (props) => (
                                 <Form>
-                                    <ErrorMessage
+                                    {/* <ErrorMessage
                                         name='description'
                                         component='div'
                                         className='alert alert-warning' />
                                     <ErrorMessage
                                         name='targetDate'
                                         component='div'
-                                        className='alert alert-warning' />
+                                        className='alert alert-warning' /> */}
                                     <fieldset className='form-group'>
                                         <label>Номер документа</label>
-                                        <Field className='form-control' type='text' name='doc_number' />
+                                        <Field className='form-control' 
+                                        type='text' 
+                                        name='doc_number' />
                                     </fieldset>
                                     <fieldset className='form-group'>
                                         <label>Название документа</label>
-                                        <Field className='form-control' type='text' name='doc_name' />
+                                        <Field className='form-control' 
+                                        type='text' 
+                                        name='doc_name' />
                                     </fieldset>
                                     <fieldset className='form-group'>
                                         <label>Описание</label>
-                                        <Field className='form-control' type='text' name='doc_body' />
+                                        <Field className='form-control' 
+                                        type='text' 
+                                        name='doc_body' />
                                     </fieldset>
                                     <fieldset className='form-group'>
                                         <label>Примечание</label>
-                                        <Field className='form-control' type='text' name='doc_note' />
+                                        <Field className='form-control' 
+                                        type='text' 
+                                        name='doc_note' />
                                     </fieldset>
                                     <fieldset className='form-group'>
                                         <label>Дата создания</label>
-                                        <Field className='form-control' type='date' name='doc_register_date' />
+                                        <Field className='form-control' 
+                                        type='date' 
+                                        name='doc_register_date' />
                                     </fieldset>
                                     <fieldset className='form-group'>
                                         <label>Дата отправки</label>
-                                        <Field className='form-control' type='date' name='doc_dispatch_date' />
+                                        <Field className='form-control' 
+                                        type='date' 
+                                        name='doc_dispatch_date' />
                                     </fieldset>
                                     <fieldset className='form-group'>
                                         <label>Составитель</label>
-                                        <Select options={this.state.users} name='id_use' value={this.state.id_use} />
+                                        <CustomSelect options={this.state.users} 
+                                        onChange={value=>Formik.setFieldValue('job',value.value)} 
+                                        value={this.state.id_use} />
                                     </fieldset>
                                     <fieldset className='form-group'>
                                         <label>Вид документа</label>
-                                        <Select options={this.state.vids} name='id_vid' value={this.state.id_vid} />
+                                        <CustomSelect options={this.state.vids} 
+                                        name='id_vid' 
+                                        value={this.state.id_vid} />
                                     </fieldset>
                                     <fieldset className='form-group'>
                                         <label>Тип документа</label>
-                                        <Select options={this.state.types} name='id_typ' value={this.state.id_typ} />
+                                        <CustomSelect options={this.state.types} 
+                                        name='id_typ' 
+                                        value={this.state.id_typ} />
                                     </fieldset>
                                     <fieldset className='form-group'>
                                         <label>Организация</label>
-                                        <Select options={this.state.organisations} name='id_org' value={this.state.id_org} />
+                                        <CustomSelect options={this.state.organisations} 
+                                        name='id_org' 
+                                        value={this.state.id_org} />
                                     </fieldset>
 
                                     <button type='submit' className='btn btn-success'>Save</button>

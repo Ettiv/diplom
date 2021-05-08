@@ -62,7 +62,26 @@
       "typ_name": "договор"
     }
   ],
-  "documents": [],
+  "documents": [
+    {
+      "doc_number": "",
+      "doc_name": "",
+      "doc_register_date": "2021-05-07",
+      "doc_dispatch_date": "2021-05-07",
+      "doc_body": "",
+      "doc_note": "",
+      "id": 1
+    },
+    {
+      "id": 2,
+      "doc_body": "",
+      "doc_number": "",
+      "doc_name": "sdfds",
+      "doc_register_date": "2021-05-07",
+      "doc_dispatch_date": "2021-05-07",
+      "doc_note": "sdfsdfsf"
+    }
+  ],
   "ready_doc": [
     {
       "id": 1,

@@ -41,60 +41,52 @@ class TodoDataService {
         return axios.post(`${JPA_API_URL}/documents`, todo);
     }
 
-    retriveAllFio() {
-        this.retriveAllUsers()
-            .then(response => {
-                let users = [];
-                response.data.forEach(user => {
-                    users.push({
-                        value: user.id,
-                        label: user.fio_emp
-                    })
-                });
-                return users;
-            });
+    retriveAllFio = async () => {
+        const res = await this.retriveAllUsers();
+        let users = [];
+        res.data.forEach(user => {
+            users.push({
+                value: user.id,
+                label: user.fio_emp
+            })
+        });
+        return users;
     }
 
-    retriveAllVidsName() {
-        this.retriveAllVids()
-            .then(response => {
-                let vids = [];
-                response.data.forEach(vid => {
-                    vids.push({
-                        value: vid.id,
-                        label: vid.vid_name
-                    })
-                });
-                return vids;
-            });
+    retriveAllVidsName = async () => {
+        const res = await this.retriveAllVids();
+        let vids = [];
+        res.data.forEach(vid => {
+            vids.push({
+                value: vid.id,
+                label: vid.vid_name
+            })
+        });
+        return vids;
     }
 
-    retriveAllTypesName() {
-        this.retriveAllTypes()
-            .then(response => {
-                let types = [];
-                response.data.forEach(type => {
-                    types.push({
-                        value: type.id,
-                        label: type.typ_name
-                    })
-                });
-                return types;
-            });
+    retriveAllTypesName = async () => {
+        const res = await this.retriveAllTypes();
+        let types = [];
+        res.data.forEach(type => {
+            types.push({
+                value: type.id,
+                label: type.typ_name
+            })
+        });
+        return types;
     }
 
-    retriveAllOrganisationsName() {
-        this.retriveAllOrganisations()
-            .then(response => {
-                let organisations = [];
-                response.data.forEach(organisation => {
-                    organisations.push({
-                        value: organisation.id,
-                        label: organisation.org_name
-                    })
-                });
-                return organisations;
-            });
+    retriveAllOrganisationsName = async () => {
+        const res = await this.retriveAllOrganisations();
+        let organisations = [];
+        res.data.forEach(organisation => {
+            organisations.push({
+                value: organisation.id,
+                label: organisation.org_name
+            })
+        });
+        return organisations;
     }
 }
 
