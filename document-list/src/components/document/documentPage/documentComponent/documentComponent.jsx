@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import moment from 'moment';
-import { ErrorMessage, Field, Form, Formik } from 'formik';
-// import * as Yup from 'yup';
+import { ErrorMessage,Field, Form, Formik } from 'formik';
+
 
 import CustomSelect from '../customSelect/customSelect';
 
 import '../../../../bootatrap.css';
 
 import todoDataService from '../../../../api/documet/documentDataService.js';
+// import Spiner from '../../uiComponents/spiner/spiner';
 
 export default class DocumentComponent extends Component {
 
@@ -15,6 +16,7 @@ export default class DocumentComponent extends Component {
         super(props);
 
         this.state = {
+            loading: true,
             id: +this.props.match.params.id,
             doc_name: '',
             doc_body: '',
@@ -22,37 +24,98 @@ export default class DocumentComponent extends Component {
             doc_number: '',
             doc_register_date: moment(new Date()).format('YYYY-MM-DD'),
             doc_dispatch_date: moment(new Date()).format('YYYY-MM-DD'),
-            users: [{
-                value:'1',
-                lable:'222'
-            }],
+            users: [],
             vids: [],
             types: [],
             organisations: []
         }
 
         this.onSubmit = this.onSubmit.bind(this);
-        //this.validate = this.validate.bind(this);
+        this.validate = this.validate.bind(this);
     }
 
     componentDidMount() {
 
-        let 
-            users = todoDataService.retriveAllFio(),
-            vids = todoDataService.retriveAllVidsName(),
-            types = todoDataService.retriveAllTypesName(),
-            organisations = todoDataService.retriveAllOrganisationsName();
+        todoDataService.retriveAllUsers()
+            .then(response => {
+                let users = [
+                    {
+                        "value": null,
+                        "label": "..."
+                    }
+                ];
+                response.data.forEach(user => {
+                    users.push({
+                        "value": user.id,
+                        "label": user.fio_emp
+                    })
+                });
+                this.setState({
+                    users
+                })
+            });
 
-        console.log(users,vids, types, organisations);
+        todoDataService.retriveAllVids()
+            .then(response => {
+                let vids = [
+                    {
+                        "value": null,
+                        "label": "..."
+                    }
+                ];
+                response.data.forEach(vid => {
+                    vids.push({
+                        "value": vid.id,
+                        "label": vid.vid_name
+                    })
+                });
+                this.setState({
+                    vids
+                })
+            });
 
-        this.setState({
-            //users,
-            vids,
-            types,
-            organisations
-        })
+        todoDataService.retriveAllTypes()
+            .then(response => {
+                let types = [
+                    {
+                        "value": null,
+                        "label": "..."
+                    }
+                ];
+                response.data.forEach(type => {
+                    types.push({
+                        "value": type.id,
+                        "label": type.typ_name
+                    })
+                });
+                this.setState({
+                    types
+                })
+            });
+
+        todoDataService.retriveAllOrganisations()
+            .then(response => {
+                let organisations = [
+                    {
+                        "value": null,
+                        "label": "..."
+                    }
+                ];
+                response.data.forEach(organisation => {
+                    organisations.push({
+                        "value": organisation.id,
+                        "label": organisation.org_name
+                    })
+                });
+                this.setState({
+                    organisations
+                })
+            });
 
         if (this.state.id === -1) {
+            this.setState({
+                loading: false
+            })
             return
         }
 
@@ -67,6 +130,10 @@ export default class DocumentComponent extends Component {
                     doc_dispatch_date: moment(response.data.doc_dispatch_date).format('YYYY-MM-DD')
                 });
             });
+
+        this.setState({
+            loading: false
+        })
     }
 
     onSubmit(values) {
@@ -74,11 +141,10 @@ export default class DocumentComponent extends Component {
         let document = {
             "id": this.state.id,
             "doc_body": values.doc_body,
-            "targetDate": values.targetDate,
-            "vid_doc": values.vid_doc,
-            "typ_doc": values.typ_doc,
-            "org_name": values.org_name,
-            "use_fio": values.users,
+            "vid_doc_id": values.vids,
+            "typ_doc_id": values.types,
+            "org_id": values.organisations,
+            "use_id": values.users,
             "doc_number": values.doc_number,
             "doc_name": values.doc_name,
             "doc_register_date": values.doc_register_date,
@@ -87,10 +153,10 @@ export default class DocumentComponent extends Component {
         }
 
         let newDocument = {
-            "vid_doc": values.vid_doc,
-            "typ_doc": values.typ_doc,
-            "org_name": values.org_name,
-            "use_fio": values.users,
+            "vid_doc_id": values.vids,
+            "typ_doc_id": values.types,
+            "org_id": values.organisations,
+            "use_id": values.users,
             "doc_number": values.doc_number,
             "doc_name": values.doc_name,
             "doc_register_date": values.doc_register_date,
@@ -109,31 +175,57 @@ export default class DocumentComponent extends Component {
                     this.props.history.push('/documents');
                 });
         }
-        console.log('Form data', values)
-        console.log('Saved data', JSON.parse(JSON.stringify(values)))
     }
 
-    
-    // validate(values) { // должен возвращать ошибку
-    //     let errors = {};
-    //     if (!values.description) {
-    //         errors.description = 'Enter description';
-    //     } else if (values.description.length < 5) {
-    //         errors.description = 'Enter atleast 5 characters in descriptin';
-    //     }
 
-    //     if (!moment(values.targetDate).isValid()) {
-    //         errors.targetDate = 'Enter a valid target date';
-    //     }
+    validate(values) { // должен возвращать ошибку
+        let errors = {};
+        if (!values.doc_name) {
+            errors.doc_name = 'Введите название документа';
+        } else if (values.doc_name.length < 5) {
+            errors.doc_name = 'Минимум 5 букв в названии';
+        }
 
-    //     return errors;
-    // }
+        if (!values.doc_body) {
+            errors.doc_body = 'Введите текст документа'
+        }
+
+        if (!values.doc_note) {
+            errors.doc_note = 'Введите заметку документа'
+        }
+
+        if (!values.doc_number) {
+            errors.doc_number = 'Введите номер документа'
+        }
+
+        if (!moment(values.doc_register_date).isValid()) {
+            errors.doc_register_date = 'Введите дату регистрации документа';
+        }
+
+        if (!moment(values.doc_dispatch_date).isValid()) {
+            errors.doc_dispatch_date = 'Введите дату отправки документа';
+        }
+
+        if(!values.users){
+            errors.users = 'Выберете составителя';
+        }
+
+        if(!values.vids){
+            errors.vids = 'Выберете вид документа';
+        }
+
+        if(!values.types){
+            errors.types = 'Выберете тип документа';
+        }
+
+        if(!values.organisations){
+            errors.organisations = 'Выберете Организацию';
+        }
+
+        return errors;
+    }
 
     render() {
-
-        // const validationSchema = Yup.object({
-        //     users: Yup.string().required('Required')
-        // })
 
         return (
             <div>
@@ -148,88 +240,138 @@ export default class DocumentComponent extends Component {
                             doc_dispatch_date: this.state.doc_dispatch_date,
                             doc_number: this.state.doc_number,
                             users: '',
-                            // vids: this.state.vids,
-                            // types: this.state.types,
-                            // organisations: this.state.organisations
+                            vids: '',
+                            types: '',
+                            organisations: ''
                         }
                     }
                         validateOnChange={false}
                         validateOnBlur={false}
                         onSubmit={this.onSubmit}
-                        //validate={this.validate}
-                        // validationSchema={validationSchema}
+                        validate={this.validate}
                         enableReinitialize={true}>
                         {
                             (props) => (
                                 <Form>
-                                    {/* <ErrorMessage
-                                        name='description'
-                                        component='div'
-                                        className='alert alert-warning' />
-                                    <ErrorMessage
-                                        name='targetDate'
-                                        component='div'
-                                        className='alert alert-warning' /> */}
                                     <fieldset className='form-group'>
                                         <label>Номер документа</label>
                                         <Field className='form-control'
                                             type='text'
                                             name='doc_number' />
                                     </fieldset>
+
+                                    <ErrorMessage
+                                        name='doc_number'
+                                        component='div'
+                                        className='alert alert-warning' />
+
                                     <fieldset className='form-group'>
                                         <label>Название документа</label>
                                         <Field className='form-control'
                                             type='text'
                                             name='doc_name' />
                                     </fieldset>
+
+                                    <ErrorMessage
+                                        name='doc_name'
+                                        component='div'
+                                        className='alert alert-warning' />
+
                                     <fieldset className='form-group'>
                                         <label>Описание</label>
                                         <Field className='form-control'
                                             type='text'
                                             name='doc_body' />
                                     </fieldset>
+
+                                    <ErrorMessage
+                                        name='doc_body'
+                                        component='div'
+                                        className='alert alert-warning' />
+
                                     <fieldset className='form-group'>
                                         <label>Примечание</label>
                                         <Field className='form-control'
                                             type='text'
                                             name='doc_note' />
                                     </fieldset>
+
+                                    <ErrorMessage
+                                        name='doc_note'
+                                        component='div'
+                                        className='alert alert-warning' />
                                     <fieldset className='form-group'>
+
                                         <label>Дата создания</label>
                                         <Field className='form-control'
                                             type='date'
                                             name='doc_register_date' />
                                     </fieldset>
+
+                                    <ErrorMessage
+                                        name='doc_register_date'
+                                        component='div'
+                                        className='alert alert-warning' />
+
                                     <fieldset className='form-group'>
                                         <label>Дата отправки</label>
                                         <Field className='form-control'
                                             type='date'
                                             name='doc_dispatch_date' />
                                     </fieldset>
+
+                                    <ErrorMessage
+                                        name='doc_dispatch_date'
+                                        component='div'
+                                        className='alert alert-warning' />
+
                                     <fieldset className='form-group'>
-                                        <lable >Составитель</lable>
-                                        <CustomSelect 
+                                        <label >Составитель</label>
+                                        <CustomSelect
                                             options={this.state.users}
-                                            name= 'users' />
+                                            name='users' />
                                     </fieldset>
-                                    {/* <fieldset className='form-group'>
+
+                                    <ErrorMessage
+                                        name='users'
+                                        component='div'
+                                        className='alert alert-warning' />
+
+                                    <fieldset className='form-group'>
                                         <label>Вид документа</label>
-                                        <CustomSelect options={this.state.vids} 
-                                        name='id_vid' 
-                                        value={this.state.id_vid} />
+                                        <CustomSelect
+                                            options={this.state.vids}
+                                            name='vids' />
                                     </fieldset>
+
+                                    <ErrorMessage
+                                        name='vids'
+                                        component='div'
+                                        className='alert alert-warning' />
+
                                     <fieldset className='form-group'>
                                         <label>Тип документа</label>
-                                        <CustomSelect options={this.state.types} 
-                                        name='id_typ' 
-                                        value={this.state.id_typ} />
+                                        <CustomSelect
+                                            options={this.state.types}
+                                            name='types' />
                                     </fieldset>
+
+                                    <ErrorMessage
+                                        name='types'
+                                        component='div'
+                                        className='alert alert-warning' />
+                                    
                                     <fieldset className='form-group'>
                                         <label>Организация</label>
-                                        <CustomSelect options={this.state.organisations} 
-                                        name='id_org' 
-                                        value={this.state.id_org} />
-                                    </fieldset> */}
+                                        <CustomSelect
+                                            options={this.state.organisations}
+                                            name='organisations' />
+                                    </fieldset>
+
+                                    <ErrorMessage
+                                        name='organisations'
+                                        component='div'
+                                        className='alert alert-warning' />
 
                                     <button type='submit' className='btn btn-success'>Save</button>
                                 </Form>
@@ -241,3 +383,4 @@ export default class DocumentComponent extends Component {
         );
     }
 }
+

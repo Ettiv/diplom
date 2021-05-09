@@ -43,9 +43,25 @@ export default class ListDocumentComponent extends Component {
     refreshDocuments(){
         TodoDataService.retriveAllDocuments()
             .then((response) => {
+                let documents = response.data;
+                let NewDocuments = documents.map((document)=>{
+                    TodoDataService.retriveTypeById(document.typ_doc_id)
+                        .then( (response) => {
+                            return ({
+                                "id": document.id,
+                                "doc_name":document.doc_name,
+                                "doc_number":document.doc_number,
+                                "typ_doc_name":response.data.typ_name,
+                                "doc_register_date":document.doc_register_date
+                            });
+                        })
+                })
+                return NewDocuments;             
+            })
+            .then((documents) => {
                 this.setState({
-                    documents: response.data
-                });
+                    documents
+                })
             })
     }
 
@@ -74,7 +90,7 @@ export default class ListDocumentComponent extends Component {
                                     <tr key={document.id}>
                                         <td>{document.doc_number}</td>
                                         <td>{document.doc_name}</td>
-                                        <td>{document.id_typ}</td>
+                                        <td>{document.typ_name}</td>
                                         <td>{document.doc_register_date}</td>
                                         <td><button 
                                             className='btn btn-success' 

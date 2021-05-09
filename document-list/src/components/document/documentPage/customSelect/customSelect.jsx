@@ -1,5 +1,5 @@
 import React from 'react';
-import {Field,ErrorMessage} from 'formik'; 
+import {Field} from 'formik'; 
 
 import '../../../../bootatrap.css';
 
@@ -12,13 +12,12 @@ function CustomSelect(props){
                     options.map(option => {
                         return(
                             <option key={option.value} value={option.value}>
-                                {option.lable}
+                                {option.label}
                             </option>
                         );
                     })
                 }
             </Field>
-            <ErrorMessage name={name} component='div' className='alert alert-warning'/>
         </div>
     );
 }

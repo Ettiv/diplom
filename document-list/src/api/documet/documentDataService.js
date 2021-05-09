@@ -22,6 +22,10 @@ class DocumentDataService {
         return axios.get(`${JPA_API_URL}/doc_types`);
     }
 
+    retriveTypeById(id){
+        return axios.get(`${JPA_API_URL}/doc_types/${id}`);
+    }
+
     retriveAllOrganisations() {
         return axios.get(`${JPA_API_URL}/organisations`);
     }
@@ -42,55 +46,6 @@ class DocumentDataService {
         return axios.post(`${JPA_API_URL}/documents`, todo);
     }
 
-    retriveAllFio = async () => {
-        let users=[];
-        const res = await this.retriveAllUsers();
-        res.data.forEach(user => {
-                users.push({
-                    value: user.id,
-                    label: user.fio_emp
-                })
-            });
-        return users;
-    }
-
-    retriveAllVidsName = () => {
-        const res = this.retriveAllVids();
-        let vids = [];
-        res.then(answer=>{
-            answer.data.forEach(vid => {
-                vids.push({
-                    value: vid.id,
-                    label: vid.vid_name
-                })
-            });
-        });
-        return vids;
-    }
-
-    retriveAllTypesName = async () => {
-        const res = await this.retriveAllTypes();
-        let types = [];
-        res.data.forEach(type => {
-            types.push({
-                value: type.id,
-                label: type.typ_name
-            })
-        });
-        return types;
-    }
-
-    retriveAllOrganisationsName = async () => {
-        const res = await this.retriveAllOrganisations();
-        let organisations = [];
-        res.data.forEach(organisation => {
-            organisations.push({
-                value: organisation.id,
-                label: organisation.org_name
-            })
-        });
-        return organisations;
-    }
 }
 
 

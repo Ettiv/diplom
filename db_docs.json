@@ -64,23 +64,17 @@
   ],
   "documents": [
     {
-      "doc_number": "",
-      "doc_name": "",
-      "doc_register_date": "2021-05-07",
-      "doc_dispatch_date": "2021-05-07",
-      "doc_body": "",
-      "doc_note": "",
-      "id": 1
-    },
-    {
-      "use_fio": "",
-      "doc_number": "",
-      "doc_name": "",
-      "doc_register_date": "2021-05-08",
-      "doc_dispatch_date": "2021-05-08",
-      "doc_body": "",
-      "doc_note": "",
-      "id": 2
+      "id": 1,
+      "doc_body": "dsdasdasd",
+      "vid_doc_id": "1",
+      "typ_doc_id": "1",
+      "org_id": "1",
+      "use_id": "1",
+      "doc_number": "asdasdad",
+      "doc_name": "asdasdsada",
+      "doc_register_date": "2021-05-09",
+      "doc_dispatch_date": "2021-05-09",
+      "doc_note": "asdasdd"
     }
   ],
   "ready_doc": [

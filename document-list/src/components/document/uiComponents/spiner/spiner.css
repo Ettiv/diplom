@@ -1,0 +1,121 @@
+@keyframes ldio-rn881iybc3h {
+    0% {
+        opacity: 1
+    }
+
+    100% {
+        opacity: 0
+    }
+}
+
+.ldio-rn881iybc3h div {
+    left: 245.575px;
+    top: 131.835px;
+    position: absolute;
+    animation: ldio-rn881iybc3h linear 1.7543859649122806s infinite;
+    background: #404040;
+    width: 25.85px;
+    height: 56.87px;
+    border-radius: 12.925px / 28.435px;
+    transform-origin: 12.925px 126.66499999999999px;
+}
+
+.ldio-rn881iybc3h div:nth-child(1) {
+    transform: rotate(0deg);
+    animation-delay: -1.6194331983805665s;
+    background: #404040;
+}
+
+.ldio-rn881iybc3h div:nth-child(2) {
+    transform: rotate(27.692307692307693deg);
+    animation-delay: -1.4844804318488527s;
+    background: #404040;
+}
+
+.ldio-rn881iybc3h div:nth-child(3) {
+    transform: rotate(55.38461538461539deg);
+    animation-delay: -1.3495276653171389s;
+    background: #404040;
+}
+
+.ldio-rn881iybc3h div:nth-child(4) {
+    transform: rotate(83.07692307692308deg);
+    animation-delay: -1.214574898785425s;
+    background: #404040;
+}
+
+.ldio-rn881iybc3h div:nth-child(5) {
+    transform: rotate(110.76923076923077deg);
+    animation-delay: -1.079622132253711s;
+    background: #404040;
+}
+
+.ldio-rn881iybc3h div:nth-child(6) {
+    transform: rotate(138.46153846153845deg);
+    animation-delay: -0.9446693657219972s;
+    background: #404040;
+}
+
+.ldio-rn881iybc3h div:nth-child(7) {
+    transform: rotate(166.15384615384616deg);
+    animation-delay: -0.8097165991902833s;
+    background: #404040;
+}
+
+.ldio-rn881iybc3h div:nth-child(8) {
+    transform: rotate(193.84615384615384deg);
+    animation-delay: -0.6747638326585694s;
+    background: #404040;
+}
+
+.ldio-rn881iybc3h div:nth-child(9) {
+    transform: rotate(221.53846153846155deg);
+    animation-delay: -0.5398110661268555s;
+    background: #404040;
+}
+
+.ldio-rn881iybc3h div:nth-child(10) {
+    transform: rotate(249.23076923076923deg);
+    animation-delay: -0.40485829959514164s;
+    background: #404040;
+}
+
+.ldio-rn881iybc3h div:nth-child(11) {
+    transform: rotate(276.9230769230769deg);
+    animation-delay: -0.26990553306342774s;
+    background: #404040;
+}
+
+.ldio-rn881iybc3h div:nth-child(12) {
+    transform: rotate(304.61538461538464deg);
+    animation-delay: -0.13495276653171387s;
+    background: #404040;
+}
+
+.ldio-rn881iybc3h div:nth-child(13) {
+    transform: rotate(332.3076923076923deg);
+    animation-delay: 0s;
+    background: #404040;
+}
+
+.loadingio-spinner-spinner-pb5m4ux8tql {
+    width: 517px;
+    height: 517px;
+    display: inline-block;
+    overflow: hidden;
+    background: rgba(NaN, NaN, NaN, 0);
+}
+
+.ldio-rn881iybc3h {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform: translateZ(0) scale(1);
+    backface-visibility: hidden;
+    transform-origin: 0 0;
+    /* see note above */
+}
+
+.ldio-rn881iybc3h div {
+    box-sizing: content-box;
+}
