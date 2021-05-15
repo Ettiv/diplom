@@ -1,4 +1,7 @@
 {
+  "roles": {
+    "roles": ["ROLE_USER", "ROLE_ADMIN"]
+  },
   "users": [
     {
       "id": 1,
@@ -6,7 +9,8 @@
       "id_pos": 1,
       "fio_emp": "Антон Волков Воркович",
       "adress_emp": "Дом 13 кв. 26",
-      "phone_emp": "895233499344"
+      "phone_emp": "895233499344",
+      "roles": ["ROLE_USER", "ROLE_ADMIN"]
     },
     {
       "id": 2,
@@ -14,7 +18,8 @@
       "id_pos": 2,
       "fio_emp": "Василий Волков Воркович",
       "adress_emp": "Дом 14 кв. 26",
-      "phone_emp": "895233499344"
+      "phone_emp": "895233499344",
+      "roles": ["ROLE_USER"]
     },
     {
       "id": 3,
@@ -22,7 +27,8 @@
       "id_pos": 1,
       "fio_emp": "Дмитрий Волков Воркович",
       "adress_emp": "Дом 15 кв. 26",
-      "phone_emp": "895233499344"
+      "phone_emp": "895233499344",
+      "roles": ["ROLE_USER"]
     }
   ],
   "posts": [
@@ -64,17 +70,56 @@
   ],
   "documents": [
     {
-      "id": 1,
-      "doc_body": "dsdasdasd",
+      "id": 4,
+      "doc_body": "gggggedrgdmnasfg\ndfgkldjfsg\ndjfsdgkl;erg\nfgdgs\nfgsdfgsd\nfgsdfgg\nsdfgsd\nfgsdfg\nsdfg\ngsd\nfgsd\ngds\nfgdf\ngdfg\nsdg\nfg\nsdg\nsdgdfgsdfgsdfgdf\ngdf\ngf\ndgg\nfgf\ngf\ngf\ngfgfg",
       "vid_doc_id": "1",
       "typ_doc_id": "1",
       "org_id": "1",
       "use_id": "1",
-      "doc_number": "asdasdad",
-      "doc_name": "asdasdsada",
-      "doc_register_date": "2021-05-09",
-      "doc_dispatch_date": "2021-05-09",
-      "doc_note": "asdasdd"
+      "doc_number": "rgegfgdfg",
+      "doc_name": "dfghdfgh",
+      "doc_register_date": "2021-05-11",
+      "doc_dispatch_date": "2021-05-11",
+      "doc_note": "dfghdfhfgh"
+    },
+    {
+      "vid_doc_id": "1",
+      "typ_doc_id": "1",
+      "org_id": "1",
+      "use_id": "2",
+      "doc_number": "dfgsdfgsd",
+      "doc_name": "sdfgsdfgsdfg",
+      "doc_register_date": "2021-05-11",
+      "doc_dispatch_date": "2021-05-11",
+      "doc_body": "sdfgsdgsdg",
+      "doc_note": "sdfgdsgsdgsd",
+      "id": 5
+    },
+    {
+      "vid_doc_id": "1",
+      "typ_doc_id": "1",
+      "org_id": "1",
+      "use_id": "2",
+      "doc_number": "fgsdgsdfg",
+      "doc_name": "sdfgsdfgsdffg",
+      "doc_register_date": "2021-05-11",
+      "doc_dispatch_date": "2021-05-11",
+      "doc_body": "sdfgsdgdfg",
+      "doc_note": "sdfgsdgsdfgsdg",
+      "id": 6
+    },
+    {
+      "vid_doc_id": "1",
+      "typ_doc_id": "1",
+      "org_id": "1",
+      "use_id": "2",
+      "doc_number": "gsgsddfg",
+      "doc_name": "sfgdsgd",
+      "doc_register_date": "2021-05-11",
+      "doc_dispatch_date": "2021-05-11",
+      "doc_body": "fgsdgsdgf",
+      "doc_note": "dfgdsgdsfg",
+      "id": 7
     }
   ],
   "ready_doc": [

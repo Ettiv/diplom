@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import DocumentDataService from '../../../../api/documet/documentDataService.js';
+import UserDataService from '../../../../api/user/userDataService.js';
 import '../../../../bootatrap.css';
 
 export default class ListDocumentComponent extends Component {
@@ -9,87 +9,86 @@ export default class ListDocumentComponent extends Component {
         this.state = {
             message: null
         }
-        this.deleteDocumentClicked = this.deleteDocumentClicked.bind(this);
-        this.updateDocumentClicked = this.updateDocumentClicked.bind(this);
-        this.watchDocumentClicked = this.watchDocumentClicked.bind(this);
-        this.addDocumentClicked = this.addDocumentClicked.bind(this);
+        this.deleteUserClicked = this.deleteUserClicked.bind(this);
+        this.updateUserClicked = this.updateUserClicked.bind(this);
+        this.watchUserClicked = this.watchUserClicked.bind(this);
+        this.addUserClicked = this.addUserClicked.bind(this);
     }
 
     componentDidMount() {
-        this.props.refreshDocuments();
+        this.props.refreshUsers();
     }
 
-    deleteDocumentClicked(id) {
-        DocumentDataService.deleteTodo(id)
+    deleteUserClicked(id) {
+        UserDataService.deleteUser(id)
             .then(
                 response => {
                     this.setState({
-                        message: `Delete of todo ${id} is sucsessful`
+                        message: `Delete of User ${id} is sucsessful`
                     });
-                    this.props.refreshDocuments();
+                    this.props.refreshUsers();
                 }
             )
     }
 
-    updateDocumentClicked(id) {
-        this.props.history.push(`/documents/${id}`);
+    updateUserClicked(id) {
+        this.props.history.push(`/users/${id}`);
     }
 
-    watchDocumentClicked(id) {
-        this.props.history.push(`/documents/watch/${id}`);
+    watchUserClicked(id) {
+        this.props.history.push(`/users/watch/${id}`);
     }
 
-    addDocumentClicked() {
-        this.props.history.push(`/documents/-1`);
+    addUserClicked() {
+        this.props.history.push(`/users/-1`);
     }
 
     render() {
 
         return (
             <div className='row'>
-                <div className='col-2' />
-                <div className='col-8' >
+                <div className='col-1' />
+                <div className='col-10' >
                     <div>
-                        <h1>Документы</h1>
+                        <h1>Пользователи</h1>
                         {this.state.message ? <div className='alert alert-success'>{this.state.message}</div> : null}
                         <div className='container'>
 
                             <table className='table'>
                                 <thead>
                                     <tr>
-                                        <th>Код документа</th>
-                                        <th>Название документа</th>
-                                        <th>Тип документа</th>
-                                        <th>Дата создания</th>
+                                        <th>Имя пользователя</th>
+                                        <th>Пост пользователя</th>
+                                        <th>Телефон пользователя</th>
+                                        <th>Адрес пользователя</th>
                                         <th>Watch</th>
                                         <th>Delete</th>
                                         <th>Update</th>
-
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {this.props.documents.map(document => {
+                                    {this.props.users.map(user => {
                                         return (
-                                            <tr key={document.id}>
-                                                <td>{document.doc_number}</td>
-                                                <td>{document.doc_name}</td>
-                                                <td>{document.typ_name}</td>
-                                                <td>{document.doc_register_date}</td>
+                                            <tr key={user.id}>
+                                                <td>{user.fio_emp}</td>
+                                                <td>{user.id_pos}</td>
+                                                <td>{user.phone_emp}</td>
+                                                <td>{user.adress_emp}</td>
                                                 <td><button
                                                     className='btn btn-success'
-                                                    onClick={() => this.watchDocumentClicked(document.id)}>
+                                                    onClick={() => this.watchUserClicked(user.id)}>
                                                     Watch
                                                 </button>
                                                 </td>
                                                 <td><button
                                                     className='btn btn-warning'
-                                                    onClick={() => this.updateDocumentClicked(document.id)}>
+                                                    onClick={() => this.updateUserClicked(user.id)}>
                                                     Update
                                                 </button>
                                                 </td>
                                                 <td><button
                                                     className='btn btn-danger'
-                                                    onClick={() => this.deleteDocumentClicked(document.id)}>
+                                                    onClick={() => this.deleteUserClicked(user.id)}>
                                                     Delete
                                                 </button>
                                                 </td>
@@ -101,12 +100,12 @@ export default class ListDocumentComponent extends Component {
                         </div>
                     </div>
                 </div>
-                <div className='col-2' >
+                <div className='col-1' >
                     <div className='container'>
                         <br /><br /><br /><br /><br />
                         <button
                             className='btn btn-success'
-                            onClick={this.addDocumentClicked}>
+                            onClick={this.addUserClicked}>
                             Add
                             </button>
                     </div>

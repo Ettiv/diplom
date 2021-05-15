@@ -1,16 +1,16 @@
 import React from 'react';
-import {Field} from 'formik'; 
+import { Field } from 'formik';
 
 import '../../../../bootatrap.css';
 
-function CustomSelect(props){
-    const {name,options,...rest} = props;
+function CustomSelect(props) {
+    const { name, options, value, ...rest } = props;
     return (
-        <div className='form-control'>
-            <Field as='select' id={name} name={name} {...rest}>
+        <div>
+            <Field as='select' id={name} name={name}  className='form-control' {...rest}>
                 {
                     options.map(option => {
-                        return(
+                        return (
                             <option key={option.value} value={option.value}>
                                 {option.label}
                             </option>
@@ -41,25 +41,3 @@ export default CustomSelect;
 
 
 
-
-
-
-// import React from 'react';
-// import Select from 'react-select';
-
-// const CustomSelect = ({ onChange, options, value}) => {
-
-//     return (
-//         <div>
-//             <Select
-//                 value={value}
-//                 onChange={value => {
-//                     onChange(value)
-
-//                 }} options={options} />
-//         </div>
-
-//     )
-// }
-
-// export default CustomSelect;

@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import moment from 'moment';
-import { ErrorMessage,Field, Form, Formik } from 'formik';
+import { ErrorMessage, Field, Form, Formik } from 'formik';
 
 
 import CustomSelect from '../customSelect/customSelect';
 
 import '../../../../bootatrap.css';
+import '../../../../App.css';
 
-import todoDataService from '../../../../api/documet/documentDataService.js';
+import DocumentDataService from '../../../../api/documet/documentDataService.js';
 // import Spiner from '../../uiComponents/spiner/spiner';
 
 export default class DocumentComponent extends Component {
@@ -24,6 +25,10 @@ export default class DocumentComponent extends Component {
             doc_number: '',
             doc_register_date: moment(new Date()).format('YYYY-MM-DD'),
             doc_dispatch_date: moment(new Date()).format('YYYY-MM-DD'),
+            vid_doc_id: '',
+            typ_doc_id: '',
+            use_id: '',
+            org_id: '',
             users: [],
             vids: [],
             types: [],
@@ -36,7 +41,7 @@ export default class DocumentComponent extends Component {
 
     componentDidMount() {
 
-        todoDataService.retriveAllUsers()
+        DocumentDataService.retriveAllUsers()
             .then(response => {
                 let users = [
                     {
@@ -55,7 +60,7 @@ export default class DocumentComponent extends Component {
                 })
             });
 
-        todoDataService.retriveAllVids()
+            DocumentDataService.retriveAllVids()
             .then(response => {
                 let vids = [
                     {
@@ -74,7 +79,7 @@ export default class DocumentComponent extends Component {
                 })
             });
 
-        todoDataService.retriveAllTypes()
+            DocumentDataService.retriveAllTypes()
             .then(response => {
                 let types = [
                     {
@@ -93,7 +98,7 @@ export default class DocumentComponent extends Component {
                 })
             });
 
-        todoDataService.retriveAllOrganisations()
+            DocumentDataService.retriveAllOrganisations()
             .then(response => {
                 let organisations = [
                     {
@@ -119,7 +124,7 @@ export default class DocumentComponent extends Component {
             return
         }
 
-        todoDataService.retriveDocument(this.state.id)
+        DocumentDataService.retriveDocument(this.state.id)
             .then(response => {
                 this.setState({
                     doc_name: response.data.doc_name,
@@ -127,7 +132,11 @@ export default class DocumentComponent extends Component {
                     doc_note: response.data.doc_note,
                     doc_number: response.data.doc_number,
                     doc_register_date: moment(response.data.doc_register_date).format('YYYY-MM-DD'),
-                    doc_dispatch_date: moment(response.data.doc_dispatch_date).format('YYYY-MM-DD')
+                    doc_dispatch_date: moment(response.data.doc_dispatch_date).format('YYYY-MM-DD'),
+                    typ_doc_id: response.data.typ_doc_id,
+                    vid_doc_id: response.data.vid_doc_id,
+                    org_id: response.data.org_id,
+                    use_id: response.data.use_id
                 });
             });
 
@@ -166,11 +175,11 @@ export default class DocumentComponent extends Component {
         }
 
         if (this.state.id === -1) {
-            todoDataService.createDocument(newDocument).then(() => {
+            DocumentDataService.createDocument(newDocument).then(() => {
                 this.props.history.push('/documents');
             });
         } else {
-            todoDataService.updateDocument(this.state.id, document)
+            DocumentDataService.updateDocument(this.state.id, document)
                 .then(() => {
                     this.props.history.push('/documents');
                 });
@@ -206,19 +215,19 @@ export default class DocumentComponent extends Component {
             errors.doc_dispatch_date = 'Введите дату отправки документа';
         }
 
-        if(!values.users){
+        if (!values.users) {
             errors.users = 'Выберете составителя';
         }
 
-        if(!values.vids){
+        if (!values.vids) {
             errors.vids = 'Выберете вид документа';
         }
 
-        if(!values.types){
+        if (!values.types) {
             errors.types = 'Выберете тип документа';
         }
 
-        if(!values.organisations){
+        if (!values.organisations) {
             errors.organisations = 'Выберете Организацию';
         }
 
@@ -229,7 +238,7 @@ export default class DocumentComponent extends Component {
 
         return (
             <div>
-                <h1>Todo</h1>
+                <h1>Документ</h1>
                 <div className='container'>
                     <Formik initialValues={
                         {
@@ -239,10 +248,10 @@ export default class DocumentComponent extends Component {
                             doc_register_date: this.state.doc_register_date,
                             doc_dispatch_date: this.state.doc_dispatch_date,
                             doc_number: this.state.doc_number,
-                            users: '',
-                            vids: '',
-                            types: '',
-                            organisations: ''
+                            users: this.state.use_id,
+                            vids: this.state.vid_doc_id,
+                            types: this.state.typ_doc_id,
+                            organisations: this.state.org_id
                         }
                     }
                         validateOnChange={false}
@@ -263,7 +272,7 @@ export default class DocumentComponent extends Component {
                                     <ErrorMessage
                                         name='doc_number'
                                         component='div'
-                                        className='alert alert-warning' />
+                                        className='alert alert-danger' />
 
                                     <fieldset className='form-group'>
                                         <label>Название документа</label>
@@ -275,32 +284,40 @@ export default class DocumentComponent extends Component {
                                     <ErrorMessage
                                         name='doc_name'
                                         component='div'
-                                        className='alert alert-warning' />
+                                        className='alert alert-danger' />
 
                                     <fieldset className='form-group'>
                                         <label>Описание</label>
-                                        <Field className='form-control'
+                                        <Field as='textarea' className='form-control '
+                                            rows='6'
                                             type='text'
-                                            name='doc_body' />
+                                            name='doc_body' >
+                                            <textarea rows='8'/>                                            
+                                        </Field>
+
                                     </fieldset>
 
                                     <ErrorMessage
                                         name='doc_body'
                                         component='div'
-                                        className='alert alert-warning' />
+                                        className='alert alert-danger' />
 
                                     <fieldset className='form-group'>
                                         <label>Примечание</label>
-                                        <Field className='form-control'
+                                        <Field as='textarea' className='form-control'
                                             type='text'
-                                            name='doc_note' />
+                                            name='doc_note'
+                                            rows='4'>
+                                            <textarea
+                                                rows='4'/>
+                                         </Field>
                                     </fieldset>
 
                                     <ErrorMessage
                                         name='doc_note'
                                         component='div'
                                         className='alert alert-warning' />
-                                    <fieldset className='form-group'>
+                                    <fieldset className='form-danger'>
 
                                         <label>Дата создания</label>
                                         <Field className='form-control'
@@ -311,7 +328,7 @@ export default class DocumentComponent extends Component {
                                     <ErrorMessage
                                         name='doc_register_date'
                                         component='div'
-                                        className='alert alert-warning' />
+                                        className='alert alert-danger' />
 
                                     <fieldset className='form-group'>
                                         <label>Дата отправки</label>
@@ -323,55 +340,60 @@ export default class DocumentComponent extends Component {
                                     <ErrorMessage
                                         name='doc_dispatch_date'
                                         component='div'
-                                        className='alert alert-warning' />
+                                        className='alert alert-danger' />
 
                                     <fieldset className='form-group'>
                                         <label >Составитель</label>
                                         <CustomSelect
                                             options={this.state.users}
-                                            name='users' />
+                                            name='users'
+                                        />
                                     </fieldset>
 
                                     <ErrorMessage
                                         name='users'
                                         component='div'
-                                        className='alert alert-warning' />
+                                        className='alert alert-danger' />
 
                                     <fieldset className='form-group'>
                                         <label>Вид документа</label>
                                         <CustomSelect
                                             options={this.state.vids}
-                                            name='vids' />
+                                            name='vids'
+                                        />
                                     </fieldset>
 
                                     <ErrorMessage
                                         name='vids'
                                         component='div'
-                                        className='alert alert-warning' />
+                                        className='alert alert-danger' />
 
                                     <fieldset className='form-group'>
                                         <label>Тип документа</label>
                                         <CustomSelect
                                             options={this.state.types}
-                                            name='types' />
+                                            name='types'
+                                        />
                                     </fieldset>
 
                                     <ErrorMessage
                                         name='types'
                                         component='div'
-                                        className='alert alert-warning' />
-                                    
+                                        className='alert alert-danger' />
+
                                     <fieldset className='form-group'>
                                         <label>Организация</label>
                                         <CustomSelect
                                             options={this.state.organisations}
-                                            name='organisations' />
+                                            name='organisations'
+                                        />
                                     </fieldset>
 
                                     <ErrorMessage
                                         name='organisations'
                                         component='div'
-                                        className='alert alert-warning' />
+                                        className='alert alert-danger'
+                                    />
 
                                     <button type='submit' className='btn btn-success'>Save</button>
                                 </Form>
