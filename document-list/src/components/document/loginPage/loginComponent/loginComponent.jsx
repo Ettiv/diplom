@@ -8,8 +8,8 @@ export default class LoginComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            userName: 'in28minutes',
-            password: 'dummy',
+            userName: 'victor@gmail.com',
+            password: '123',
             hasLoginFailed: false,
             showSucsessMessage: false
         }

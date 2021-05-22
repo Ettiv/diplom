@@ -7,7 +7,8 @@ import {
 class DocumentDataService {
 
     retriveAllDocuments() {
-        return axios.get(`${JPA_API_URL}/documents`);
+        
+        return axios.get(`${JPA_API_URL}/docs`);
     }
 
     retriveAllUsers() {

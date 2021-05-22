@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import {
-    API_URL
+    JPA_API_URL
 } from '../constants/constants.js';
 
 export const USER_NAME_SESSION_ATTRIBUTE_NAME = 'authenticatedUser';
@@ -11,7 +11,7 @@ export const USERS_ROLES_SESSION_ATTRIBUTE_NAME = 'usersRoles';
 class AuthenticationService {
 
     executeJwtAuthentificationService(username, password) {
-        return axios.post(API_URL + '/authenticate', {
+        return axios.post(JPA_API_URL + '/authenticate', {
             username,
             password
         });
@@ -45,7 +45,6 @@ class AuthenticationService {
     getUsersRoles() {
         if (this.isUserloggedIn()) {
             let usersRoles = sessionStorage.getItem(USERS_ROLES_SESSION_ATTRIBUTE_NAME).split(',');
-            console.log(usersRoles);
             return usersRoles;
         }
     }

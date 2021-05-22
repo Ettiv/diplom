@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
+
 import ErrorComponent from './loginPage/errorComponent/errorComponent';
 import WelcomeComponent from './loginPage/welcomeComponent/welcomeComponent';
 import LoginComponent from './loginPage/loginComponent/loginComponent';
@@ -18,6 +19,8 @@ import DocumentDataService from '../../api/documet/documentDataService.js';
 import UserDataService from '../../api/user/userDataService.js';
 
 
+
+//import {history} from '../../App.js';
 class TodoApp extends Component {
 
     constructor(){
@@ -34,7 +37,7 @@ class TodoApp extends Component {
         DocumentDataService.retriveAllDocuments()
             .then((response) => {
                 this.setState({
-                    documents: response.data
+                    documents: response.data._embedded.docs
                 });
             });
     }
@@ -51,7 +54,7 @@ class TodoApp extends Component {
     render() {
         return (
             <div className='TodoApp'>
-                <Router>
+                <Router basename={process.env.PUBLIC_URL}>
                     <>
                         <HeaderComponent refreshDocuments={this.refreshDocuments}/>
                         <Switch>

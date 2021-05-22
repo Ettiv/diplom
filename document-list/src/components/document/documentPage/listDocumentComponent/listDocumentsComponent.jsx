@@ -71,10 +71,10 @@ export default class ListDocumentComponent extends Component {
                                     {this.props.documents.map(document => {
                                         return (
                                             <tr key={document.id}>
-                                                <td>{document.doc_number}</td>
-                                                <td>{document.doc_name}</td>
-                                                <td>{document.typ_name}</td>
-                                                <td>{document.doc_register_date}</td>
+                                                <td>{document.regNum}</td>
+                                                <td>{document.name}</td>
+                                                <td>{document.typeDocId}</td>
+                                                <td>{document.reg}</td>
                                                 <td><button
                                                     className='btn btn-success'
                                                     onClick={() => this.watchDocumentClicked(document.id)}>
