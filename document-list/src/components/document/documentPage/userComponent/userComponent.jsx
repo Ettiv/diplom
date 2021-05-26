@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 
-//import CustomSelect from '../customSelect/customSelect';
+import CustomSelect from '../customSelect/customSelect';
 
 import '../../../../bootatrap.css';
 import '../../../../App.css';
@@ -17,13 +17,11 @@ export default class UserComponent extends Component {
         this.state = {
             loading: true,
             id: +this.props.match.params.id,
-            id_uni: '',
-            id_pos: '',
-            fio_emp: '',
-            adress_emp: '',
-            phone_emp: '',
-            roles: [],
-            allRoles: [],
+            unitId: '',
+            postId: '',
+            fio: '',
+            address: '',
+            phone: '',
             units: [],
             posts: []
         }
@@ -42,10 +40,10 @@ export default class UserComponent extends Component {
                         "label": "..."
                     }
                 ];
-                response.data.forEach(unit => {
+                response.data._embedded.units.forEach(unit => {
                     units.push({
-                        "value": units.id,
-                        "label": units.unit_name
+                        "value": unit.id,
+                        "label": unit.name
                     })
                 });
                 this.setState({
@@ -61,10 +59,10 @@ export default class UserComponent extends Component {
                         "label": "..."
                     }
                 ];
-                response.data.forEach(post => {
+                response.data._embedded.posts.forEach(post => {
                     posts.push({
                         "value": post.id,
-                        "label": post.post_name
+                        "label": post.name
                     })
                 });
                 this.setState({
@@ -82,12 +80,11 @@ export default class UserComponent extends Component {
         UserDataService.retriveUser(this.state.id)
             .then(response => {
                 this.setState({
-                    id_uni: response.id_uni,
-                    id_pos: response.id_pos,
-                    fio_emp: response.fio_emp,
-                    adress_emp: response.adress_emp,
-                    phone_emp: response.phone_emp,
-                    roles: response.roles
+                    unitId: response.data.unitId,
+                    postId: response.data.postId,
+                    fio: response.data.fio,
+                    address: response.data.address,
+                    phone: response.data.phone
                 })
             });
 
@@ -100,19 +97,19 @@ export default class UserComponent extends Component {
 
         let user = {
             "id": this.state.id,
-            "id_uni": this.values.id_uni,
-            "id_pos": this.values.id_pos,
-            "fio_emp": this.values.fio_emp,
-            //"adress_emp": this.values.adress_emp,
-            //"phone_emp": this.values.phone_emp
+            "unitId": values.units,
+            "postId": values.posts,
+            "fio": values.fio,
+            "address": values.address,
+            "phone": values.phone
         }
 
         let newUser = {
-            "id_uni": this.values.id_uni,
-            "id_pos": this.values.id_pos,
-            "fio_emp": this.values.fio_emp,
-            //"adress_emp": this.values.adress_emp,
-            //"phone_emp": this.values.phone_emp
+            "unitId": values.units,
+            "postId": values.posts,
+            "fio": values.fio,
+            "address": values.address,
+            "phone": values.phone
         }
 
         if (this.state.id === -1) {
@@ -130,16 +127,24 @@ export default class UserComponent extends Component {
 
     validate(values) { // должен возвращать ошибку
         let errors = {};
-        if (!values.fio_emp) {
-            errors.fio_emp = 'Введите ФИО позлователя';
+        if (!values.fio) {
+            errors.fio = 'Введите ФИО работника';
         }
 
-        if (!values.adress_emp) {
-            errors.adress_emp = 'Введите адрес пользователя'
+        if (!values.address) {
+            errors.address = 'Введите адрес работника'
         }
 
-        if (!values.phone_emp) {
-            errors.phone_emp = 'Введите телефонный номер пользователя'
+        if (!values.phone) {
+            errors.phone = 'Введите телефонный номер работника'
+        }
+
+        if(!values.units){
+            errors.units = 'Введите должность работника'
+        }
+
+        if(!values.posts){
+            errors.posts = 'Введите пост работника'
         }
 
         return errors;
@@ -153,11 +158,11 @@ export default class UserComponent extends Component {
                 <div className='container'>
                     <Formik initialValues={
                         {
-                            id_uni: this.state.id_uni,
-                            id_pos: this.state.id_pos,
-                            fio_emp: this.state.fio_emp,
-                            adress_emp: this.state.adress_emp,
-                            phone_emp: this.state.phone_emp
+                            units: this.state.unitId,
+                            posts: this.state.postId,
+                            fio: this.state.fio,
+                            address: this.state.address,
+                            phone: this.state.phone
                         }
                     }
                         validateOnChange={false}
@@ -169,41 +174,66 @@ export default class UserComponent extends Component {
                             (props) => (
                                 <Form>
                                     <fieldset className='form-group'>
-                                        <label>ФИО пользователя</label>
+                                        <label>ФИО работника</label>
                                         <Field className='form-control'
                                             type='text'
-                                            name='fio_emp' />
+                                            name='fio' />
                                     </fieldset>
 
                                     <ErrorMessage
-                                        name='fio_emp'
+                                        name='fio'
                                         component='div'
                                         className='alert alert-danger' />
 
                                     <fieldset className='form-group'>
-                                        <label>Адрес пользователя</label>
+                                        <label>Адрес работника</label>
                                         <Field className='form-control'
                                             type='text'
-                                            name='adress_emp' />
+                                            name='address' />
                                     </fieldset>
 
                                     <ErrorMessage
-                                        name='adress_emp'
+                                        name='address'
                                         component='div'
                                         className='alert alert-danger' />
 
                                     <fieldset className='form-group'>
-                                        <label>Телефон Пользователя</label>
+                                        <label>Телефон работника</label>
                                         <Field className='form-control'
                                             type='text'
-                                            name='phone_emp' />
+                                            name='phone' />
                                     </fieldset>
 
                                     <ErrorMessage
-                                        name='phone_emp'
+                                        name='phone'
                                         component='div'
                                         className='alert alert-danger' />
 
+                                    <fieldset className='form-group'>
+                                        <label>Должность работника</label>
+                                        <CustomSelect
+                                            options={this.state.units}
+                                            name='units'
+                                        />
+                                    </fieldset>
+
+                                    <ErrorMessage
+                                        name='units'
+                                        component='div'
+                                        className='alert alert-danger' />
+
+                                    <fieldset className='form-group'>
+                                        <label>Пост работника</label>
+                                        <CustomSelect
+                                            options={this.state.posts}
+                                            name='posts'
+                                        />
+                                    </fieldset>
+
+                                    <ErrorMessage
+                                        name='posts'
+                                        component='div'
+                                        className='alert alert-danger' />
 
                                     <button type='submit' className='btn btn-success'>Save</button>
                                 </Form>

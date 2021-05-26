@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import UserDataService from '../../../../api/user/userDataService.js';
+import OrganisationsDataService from '../../../../api/organisations/organisationsDataService.js';
 import '../../../../bootatrap.css';
 
 export default class ListDocumentComponent extends Component {
@@ -9,33 +9,33 @@ export default class ListDocumentComponent extends Component {
         this.state = {
             message: null
         }
-        this.deleteUserClicked = this.deleteUserClicked.bind(this);
-        this.updateUserClicked = this.updateUserClicked.bind(this);
-        this.addUserClicked = this.addUserClicked.bind(this);
+        this.deleteOrganisationClicked = this.deleteOrganisationClicked.bind(this);
+        this.updateOrganisationClicked = this.updateOrganisationClicked.bind(this);
+        this.addOrgnisationClicked = this.addOrgnisationClicked.bind(this);
     }
 
     componentDidMount() {
-        this.props.refreshUsers();
+        this.props.refreshOrganisations();
     }
 
-    deleteUserClicked(id) {
-        UserDataService.deleteUser(id)
+    deleteOrganisationClicked(id) {
+        OrganisationsDataService.deleteOrganisation(id)
             .then(
                 response => {
                     this.setState({
-                        message: `Delete of User ${id} is sucsessful`
+                        message: `Delete of Organistion ${id} is sucsessful`
                     });
-                    this.props.refreshUsers();
+                    this.props.refreshOrganisations();
                 }
             )
     }
 
-    updateUserClicked(id) {
-        this.props.history.push(`/users/${id}`);
+    updateOrganisationClicked(id) {
+        this.props.history.push(`/organisations/${id}`);
     }
 
-    addUserClicked() {
-        this.props.history.push(`/users/-1`);
+    addOrgnisationClicked() {
+        this.props.history.push(`/organisations/-1`);
     }
 
     render() {
@@ -45,40 +45,38 @@ export default class ListDocumentComponent extends Component {
                 <div className='col-2' />
                 <div className='col-8' >
                     <div>
-                        <h1>Работники</h1>
+                        <h1>Организации</h1>
                         {this.state.message ? <div className='alert alert-success'>{this.state.message}</div> : null}
                         <div className='container'>
 
                             <table className='table'>
                                 <thead>
                                     <tr>
-                                        <th>Имя работника</th>
-                                        <th>Пост работника</th>
-                                        <th>Должность работника</th>
-                                        <th>Телефон работника</th>
-                                        <th>Адрес работника</th>
+                                        <th>Название организации</th>
+                                        <th>Адрес организации</th>
+                                        <th>Телефон организации</th>
+                                        <th>Email организации</th>
                                         <th>Изменить</th>
                                         <th>Удалить</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {this.props.users.map(user => {
+                                    {this.props.organisations.map(organisation => {
                                         return (
-                                            <tr key={user.id}>
-                                                <td>{user.fio}</td>
-                                                <td>{user.post.name}</td>
-                                                <td>{user.unit.name}</td>
-                                                <td>{user.phone}</td>
-                                                <td>{user.address}</td>                                                
+                                            <tr key={organisation.id}>
+                                                <td>{organisation.name}</td>
+                                                <td>{organisation.address}</td>
+                                                <td>{organisation.phone}</td>
+                                                <td>{organisation.email}</td>                                               
                                                 <td><button
                                                     className='btn btn-warning'
-                                                    onClick={() => this.updateUserClicked(user.id)}>
+                                                    onClick={() => this.updateOrganisationClicked(organisation.id)}>
                                                     Изменить
                                                 </button>
                                                 </td>
                                                 <td><button
                                                     className='btn btn-danger'
-                                                    onClick={() => this.deleteUserClicked(user.id)}>
+                                                    onClick={() => this.deleteOrganisationClicked(organisation.id)}>
                                                     Удалить
                                                 </button>
                                                 </td>
@@ -95,7 +93,7 @@ export default class ListDocumentComponent extends Component {
                         <br /><br /><br /><br /><br />
                         <button
                             className='btn btn-success'
-                            onClick={this.addUserClicked}>
+                            onClick={this.addOrgnisationClicked}>
                             Добавить
                             </button>
                     </div>

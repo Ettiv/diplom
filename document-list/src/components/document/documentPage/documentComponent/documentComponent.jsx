@@ -19,16 +19,16 @@ export default class DocumentComponent extends Component {
         this.state = {
             loading: true,
             id: +this.props.match.params.id,
-            doc_name: '',
-            doc_body: '',
-            doc_note: '',
-            doc_number: '',
-            doc_register_date: moment(new Date()).format('YYYY-MM-DD'),
-            doc_dispatch_date: moment(new Date()).format('YYYY-MM-DD'),
-            vid_doc_id: '',
-            typ_doc_id: '',
-            use_id: '',
-            org_id: '',
+            name: '',
+            link: '',
+            note: '',
+            regNum: '',
+            reg: moment(new Date()).format('YYYY-MM-DD'),
+            out: moment(new Date()).format('YYYY-MM-DD'),
+            vidId: '',
+            typeDocId: '',
+            employeeId: '',
+            orgId: '',
             users: [],
             vids: [],
             types: [],
@@ -49,10 +49,10 @@ export default class DocumentComponent extends Component {
                         "label": "..."
                     }
                 ];
-                response.data.forEach(user => {
+                response.data._embedded.employees.forEach(user => {
                     users.push({
                         "value": user.id,
-                        "label": user.fio_emp
+                        "label": user.fio
                     })
                 });
                 this.setState({
@@ -68,10 +68,10 @@ export default class DocumentComponent extends Component {
                         "label": "..."
                     }
                 ];
-                response.data.forEach(vid => {
+                response.data._embedded.vids.forEach(vid => {
                     vids.push({
                         "value": vid.id,
-                        "label": vid.vid_name
+                        "label": vid.name
                     })
                 });
                 this.setState({
@@ -87,10 +87,10 @@ export default class DocumentComponent extends Component {
                         "label": "..."
                     }
                 ];
-                response.data.forEach(type => {
+                response.data._embedded.types.forEach(type => {
                     types.push({
                         "value": type.id,
-                        "label": type.typ_name
+                        "label": type.name
                     })
                 });
                 this.setState({
@@ -106,10 +106,10 @@ export default class DocumentComponent extends Component {
                         "label": "..."
                     }
                 ];
-                response.data.forEach(organisation => {
+                response.data._embedded.orgs.forEach(organisation => {
                     organisations.push({
                         "value": organisation.id,
-                        "label": organisation.org_name
+                        "label": organisation.name
                     })
                 });
                 this.setState({
@@ -127,16 +127,16 @@ export default class DocumentComponent extends Component {
         DocumentDataService.retriveDocument(this.state.id)
             .then(response => {
                 this.setState({
-                    doc_name: response.data.doc_name,
-                    doc_body: response.data.doc_body,
-                    doc_note: response.data.doc_note,
-                    doc_number: response.data.doc_number,
-                    doc_register_date: moment(response.data.doc_register_date).format('YYYY-MM-DD'),
-                    doc_dispatch_date: moment(response.data.doc_dispatch_date).format('YYYY-MM-DD'),
-                    typ_doc_id: response.data.typ_doc_id,
-                    vid_doc_id: response.data.vid_doc_id,
-                    org_id: response.data.org_id,
-                    use_id: response.data.use_id
+                    name: response.data.name,
+                    link: response.data.link,
+                    note: response.data.note,
+                    regNum: response.data.regNum,
+                    reg: moment(response.data.reg).format('YYYY-MM-DD'),
+                    out: moment(response.data.out).format('YYYY-MM-DD'),
+                    typeDocId: response.data.typeDocId,
+                    vidId: response.data.vidId,
+                    orgId: response.data.orgId,
+                    employeeId: response.data.employeeId
                 });
             });
 
@@ -149,29 +149,29 @@ export default class DocumentComponent extends Component {
 
         let document = {
             "id": this.state.id,
-            "doc_body": values.doc_body,
-            "vid_doc_id": values.vids,
-            "typ_doc_id": values.types,
-            "org_id": values.organisations,
-            "use_id": values.users,
-            "doc_number": values.doc_number,
-            "doc_name": values.doc_name,
-            "doc_register_date": values.doc_register_date,
-            "doc_dispatch_date": values.doc_dispatch_date,
-            "doc_note": values.doc_note
+            "link": values.link,
+            "vidId": values.vids,
+            "typeDocId": values.types,
+            "orgId": values.organisations,
+            "employeeId": values.users,
+            "regNum": values.regNum,
+            "name": values.name,
+            "reg": values.reg,
+            "out": values.out,
+            "note": values.note
         }
 
         let newDocument = {
-            "vid_doc_id": values.vids,
-            "typ_doc_id": values.types,
-            "org_id": values.organisations,
-            "use_id": values.users,
-            "doc_number": values.doc_number,
-            "doc_name": values.doc_name,
-            "doc_register_date": values.doc_register_date,
-            "doc_dispatch_date": values.doc_dispatch_date,
-            "doc_body": values.doc_body,
-            "doc_note": values.doc_note
+            "vidId": values.vids,
+            "typeDocId": values.types,
+            "orgId": values.organisations,
+            "employeeId": values.users,
+            "regNum": values.regNum,
+            "name": values.name,
+            "reg": values.reg,
+            "out": values.out,
+            "link": values.link,
+            "note": values.note
         }
 
         if (this.state.id === -1) {
@@ -189,30 +189,30 @@ export default class DocumentComponent extends Component {
 
     validate(values) { // должен возвращать ошибку
         let errors = {};
-        if (!values.doc_name) {
-            errors.doc_name = 'Введите название документа';
-        } else if (values.doc_name.length < 5) {
-            errors.doc_name = 'Минимум 5 букв в названии';
+        if (!values.name) {
+            errors.name = 'Введите название документа';
+        } else if (values.name.length < 5) {
+            errors.name = 'Минимум 5 букв в названии';
         }
 
-        if (!values.doc_body) {
-            errors.doc_body = 'Введите текст документа'
+        if (!values.link) {
+            errors.link = 'Введите текст документа'
         }
 
-        if (!values.doc_note) {
-            errors.doc_note = 'Введите заметку документа'
+        if (!values.note) {
+            errors.note = 'Введите заметку документа'
         }
 
-        if (!values.doc_number) {
-            errors.doc_number = 'Введите номер документа'
+        if (!values.regNum) {
+            errors.regNum = 'Введите номер документа'
         }
 
-        if (!moment(values.doc_register_date).isValid()) {
-            errors.doc_register_date = 'Введите дату регистрации документа';
+        if (!moment(values.reg).isValid()) {
+            errors.reg = 'Введите дату регистрации документа';
         }
 
-        if (!moment(values.doc_dispatch_date).isValid()) {
-            errors.doc_dispatch_date = 'Введите дату отправки документа';
+        if (!moment(values.out).isValid()) {
+            errors.out = 'Введите дату отправки документа';
         }
 
         if (!values.users) {
@@ -242,16 +242,16 @@ export default class DocumentComponent extends Component {
                 <div className='container'>
                     <Formik initialValues={
                         {
-                            doc_name: this.state.doc_name,
-                            doc_body: this.state.doc_body,
-                            doc_note: this.state.doc_note,
-                            doc_register_date: this.state.doc_register_date,
-                            doc_dispatch_date: this.state.doc_dispatch_date,
-                            doc_number: this.state.doc_number,
-                            users: this.state.use_id,
-                            vids: this.state.vid_doc_id,
-                            types: this.state.typ_doc_id,
-                            organisations: this.state.org_id
+                            name: this.state.name,
+                            link: this.state.link,
+                            note: this.state.note,
+                            reg: this.state.reg,
+                            out: this.state.out,
+                            regNum: this.state.regNum,
+                            users: this.state.employeeId,
+                            vids: this.state.vidId,
+                            types: this.state.typeDocId,
+                            organisations: this.state.orgId
                         }
                     }
                         validateOnChange={false}
@@ -266,11 +266,11 @@ export default class DocumentComponent extends Component {
                                         <label>Номер документа</label>
                                         <Field className='form-control'
                                             type='text'
-                                            name='doc_number' />
+                                            name='regNum' />
                                     </fieldset>
 
                                     <ErrorMessage
-                                        name='doc_number'
+                                        name='regNum'
                                         component='div'
                                         className='alert alert-danger' />
 
@@ -278,11 +278,11 @@ export default class DocumentComponent extends Component {
                                         <label>Название документа</label>
                                         <Field className='form-control'
                                             type='text'
-                                            name='doc_name' />
+                                            name='name' />
                                     </fieldset>
 
                                     <ErrorMessage
-                                        name='doc_name'
+                                        name='name'
                                         component='div'
                                         className='alert alert-danger' />
 
@@ -291,14 +291,14 @@ export default class DocumentComponent extends Component {
                                         <Field as='textarea' className='form-control '
                                             rows='6'
                                             type='text'
-                                            name='doc_body' >
+                                            name='link' >
                                             <textarea rows='8'/>                                            
                                         </Field>
 
                                     </fieldset>
 
                                     <ErrorMessage
-                                        name='doc_body'
+                                        name='link'
                                         component='div'
                                         className='alert alert-danger' />
 
@@ -306,7 +306,7 @@ export default class DocumentComponent extends Component {
                                         <label>Примечание</label>
                                         <Field as='textarea' className='form-control'
                                             type='text'
-                                            name='doc_note'
+                                            name='note'
                                             rows='4'>
                                             <textarea
                                                 rows='4'/>
@@ -314,7 +314,7 @@ export default class DocumentComponent extends Component {
                                     </fieldset>
 
                                     <ErrorMessage
-                                        name='doc_note'
+                                        name='note'
                                         component='div'
                                         className='alert alert-warning' />
                                     <fieldset className='form-danger'>
@@ -322,11 +322,11 @@ export default class DocumentComponent extends Component {
                                         <label>Дата создания</label>
                                         <Field className='form-control'
                                             type='date'
-                                            name='doc_register_date' />
+                                            name='reg' />
                                     </fieldset>
 
                                     <ErrorMessage
-                                        name='doc_register_date'
+                                        name='reg'
                                         component='div'
                                         className='alert alert-danger' />
 
@@ -334,11 +334,11 @@ export default class DocumentComponent extends Component {
                                         <label>Дата отправки</label>
                                         <Field className='form-control'
                                             type='date'
-                                            name='doc_dispatch_date' />
+                                            name='out' />
                                     </fieldset>
 
                                     <ErrorMessage
-                                        name='doc_dispatch_date'
+                                        name='out'
                                         component='div'
                                         className='alert alert-danger' />
 
@@ -395,7 +395,7 @@ export default class DocumentComponent extends Component {
                                         className='alert alert-danger'
                                     />
 
-                                    <button type='submit' className='btn btn-success'>Save</button>
+                                    <button type='submit' className='btn btn-success'>Сохранить</button>
                                 </Form>
                             )
                         }

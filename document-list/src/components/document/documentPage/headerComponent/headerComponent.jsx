@@ -7,6 +7,22 @@ import AuthenticationService from '../../../../services/authentication.js'
 
 class HeaderComponent extends Component {
 
+    constructor(props){
+        super(props);
+
+        this.state ={
+            searchParametr: ''
+        }
+
+        this.onChangeSearchParametr = this.onChangeSearchParametr.bind(this);
+    }
+
+    onChangeSearchParametr(event){
+        this.setState({
+            searchParametr: event.target.value
+        })     
+    }
+
     render() {
 
         const isUserloggedIn = AuthenticationService.isUserloggedIn();
@@ -17,9 +33,14 @@ class HeaderComponent extends Component {
                 <nav className='navbar navbar-expand-md navbar-dark bg-dark'>
                     <div className='navbar-brand'>Document List</div>
                     <ul className='navbar-nav'>
-                        {isUserloggedIn && <li><Link className='nav-link' to='/welcome/UserName'>Home</Link></li>}
-                        {isUserloggedIn && <li><Link className='nav-link' to='/documents'>Documents</Link></li>}
-                        {isUserAdmin && <li><Link className='nav-link' to='/users'>Users</Link></li>}
+                        {isUserloggedIn && <li><Link className='nav-link' to='/welcome/UserName'>Главная</Link></li>}
+                        {isUserloggedIn && <li><Link className='nav-link' to='/documents'>Документы</Link></li>}
+                        {isUserAdmin && <li><Link className='nav-link' to='/users'>Работники</Link></li>}
+                        {isUserAdmin && <li><Link className='nav-link' to='/organisations'>Организации</Link></li>}
+                        {isUserAdmin && <li><Link className='nav-link' to='/posts'>Посты</Link></li>}
+                        {isUserAdmin && <li><Link className='nav-link' to='/units'>Должности</Link></li>}
+                        {isUserAdmin && <li><Link className='nav-link' to='/types'>Типы документов</Link></li>}
+                        {isUserAdmin && <li><Link className='nav-link' to='/vids'>Виды документов</Link></li>}
                     </ul>
 
 
@@ -29,8 +50,13 @@ class HeaderComponent extends Component {
                             <>
                                 <li>
                                     <form className="form-inline my-2 my-lg-0 navbar-collapse justify-content-end">
-                                        <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
-                                        <button className="btn btn-outline-success my-2 my-sm-0" type="submit" onSubmit={this.props.refreshDocuments}>Search</button>
+                                        <input className="form-control mr-sm-2" type="search" 
+                                            placeholder="Поиск" 
+                                            aria-label="Search" 
+                                            onChange={this.onChangeSearchParametr}/>
+                                        <button className="btn btn-outline-success my-2 my-sm-0" 
+                                            type="button" 
+                                            onSubmit={() => this.props.refreshDocuments(this.setState.searchParametr)}>Поиск</button>
                                     </form>
                                 </li>
                                 <li>

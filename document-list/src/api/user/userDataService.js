@@ -7,7 +7,11 @@ import {
 class UserDataService {
 
     retriveAllUsers() {
-        return axios.get(`${JPA_API_URL}/users`);
+        return axios.get(`${JPA_API_URL}/employees`);
+    }
+
+    retriveAllReadyUsers(){
+        return axios.get(`${JPA_API_URL}/employees?projection=EmployeeFull`);
     }
 
     retriveAllUnits(){
@@ -19,19 +23,23 @@ class UserDataService {
     }
 
     deleteUser(id) {
-        return axios.delete(`${JPA_API_URL}/users/${id}`);
+        return axios.delete(`${JPA_API_URL}/employees/${id}`);
     }
 
     retriveUser(id) {
-        return axios.get(`${JPA_API_URL}/users/${id}`);
+        return axios.get(`${JPA_API_URL}/employees/${id}`);
+    }
+
+    retriveReadyUser(id) {
+        return axios.get(`${JPA_API_URL}/users/${id}/?projection=EmployeeFull`);
     }
 
     updateUser(id, user) {
-        return axios.put(`${JPA_API_URL}/users/${id}`, user);
+        return axios.put(`${JPA_API_URL}/employees/${id}`, user);
     }
 
     createUser(user) {
-        return axios.post(`${JPA_API_URL}/users`, user);
+        return axios.post(`${JPA_API_URL}/employees`, user);
     }
 
 }

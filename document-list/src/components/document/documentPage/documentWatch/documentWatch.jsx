@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import moment from 'moment';
 
 import DocumentDataService from '../../../../api/documet/documentDataService.js';
 
@@ -9,34 +10,34 @@ export default class DocumentWatch extends Component {
         this.state = {
             loading: true,
             id: +this.props.match.params.id,
-            doc_name: '',
-            doc_body: '',
-            doc_note: '',
-            doc_number: '',
-            doc_register_date: '',
-            doc_dispatch_date: '',
-            vid_doc_id: '',
-            typ_doc_id: '',
-            use_id: '',
-            org_id: ''
+            name: '',
+            link: '',
+            note: '',
+            regNum: '',
+            reg: '',
+            out: '',
+            vid:'',
+            type:'',
+            employee:'',
+            org:''
         }
     }
 
     componentDidMount() {
-        DocumentDataService.retriveDocument(this.state.id)
+        DocumentDataService.retriveReadyDocument(this.state.id)
             .then(response => {
                 this.setState({
-                    doc_name: response.data.doc_name,
-                    doc_body: response.data.doc_body,
-                    doc_note: response.data.doc_note,
-                    doc_number: response.data.doc_number,
-                    doc_register_date: response.data.doc_register_date,
-                    doc_dispatch_date: response.data.doc_dispatch_date,
-                    typ_doc_id: response.data.typ_doc_id,
-                    vid_doc_id: response.data.vid_doc_id,
-                    org_id: response.data.org_id,
-                    use_id: response.data.use_id
-                });
+                    name: response.data.name,
+                    link: response.data.link,
+                    note: response.data.note,
+                    regNum: response.data.regNum,
+                    reg: response.data.reg,
+                    out: response.data.out,
+                    typeDoc: response.data.typeDoc.name,
+                    vid: response.data.vidDoc.name,
+                    org: response.data.org.name,
+                    employee: response.data.employee.fio
+                })
             });
     }
 
@@ -45,7 +46,7 @@ export default class DocumentWatch extends Component {
         return (
             <div>
                 <h1 className='text-center text-uppercase'>
-                    {this.state.doc_name}
+                    {this.state.name}
                 </h1>
                 <div className='row'>
                     <div className='col-8'>
@@ -56,7 +57,7 @@ export default class DocumentWatch extends Component {
                         </div>
                         <div className='container text-left text-justify'>
                             <pre>
-                                {this.state.doc_body}
+                                {this.state.link}
                             </pre>                           
                         </div>
                         <br/>
@@ -67,7 +68,7 @@ export default class DocumentWatch extends Component {
                         </div>
                         <div className='container text-left text-justify'>
                             <pre>
-                                {this.state.doc_note}
+                                {this.state.note}
                             </pre>                            
                         </div>
                     </div>
@@ -76,25 +77,25 @@ export default class DocumentWatch extends Component {
 
                             <table className='table table-bordered bg-success'>
                                 <tr>
-                                    <th>Номер документа</th><td>{this.state.doc_number}</td>
+                                    <th>Номер документа</th><td>{this.state.regNum}</td>
                                 </tr>
                                 <tr>
-                                    <th>Дата регистрации</th><td>{this.state.doc_register_date}</td>
+                                    <th>Дата регистрации</th><td>{moment(this.state.reg).format('YYYY-MM-DD')}</td>
                                 </tr>
                                 <tr>
-                                    <th>Дата отправки</th><td>{this.state.doc_dispatch_date}</td>
+                                    <th>Дата отправки</th><td>{moment(this.state.out).format('YYYY-MM-DD')}</td>
                                 </tr>
                                 <tr>
-                                    <th>Составитель</th><td>{this.state.use_id}</td>
+                                    <th>Составитель</th><td>{this.state.employee}</td>
                                 </tr>
                                 <tr>
-                                    <th>Вид документа</th><td>{this.state.typ_doc_id}</td>
+                                    <th>Вид документа</th><td>{this.state.vid}</td>
                                 </tr>
                                 <tr>
-                                    <th>Тип документа</th><td>{this.state.vid_doc_id}</td>
+                                    <th>Тип документа</th><td>{this.state.typeDoc}</td>
                                 </tr>
                                 <tr>
-                                    <th>Организация</th><td>{this.state.org_id}</td>
+                                    <th>Организация</th><td>{this.state.org}</td>
                                 </tr>
 
                             </table>

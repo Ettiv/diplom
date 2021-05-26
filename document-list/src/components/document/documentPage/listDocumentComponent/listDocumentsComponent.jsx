@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 
 import DocumentDataService from '../../../../api/documet/documentDataService.js';
 import '../../../../bootatrap.css';
@@ -7,7 +8,13 @@ export default class ListDocumentComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            message: null
+            message: null,
+            types: [
+                {
+                    "id":0,
+                    "name":null
+                }
+            ]
         }
         this.deleteDocumentClicked = this.deleteDocumentClicked.bind(this);
         this.updateDocumentClicked = this.updateDocumentClicked.bind(this);
@@ -17,6 +24,19 @@ export default class ListDocumentComponent extends Component {
 
     componentDidMount() {
         this.props.refreshDocuments();
+        DocumentDataService.retriveAllTypes()
+            .then(response => {
+                let types = [];
+                response.data._embedded.types.forEach(type => {
+                    types.push({
+                        "id": type.id,
+                        "name": type.name
+                    })
+                });
+                this.setState({
+                    types
+                })
+            });
     }
 
     deleteDocumentClicked(id) {
@@ -61,36 +81,39 @@ export default class ListDocumentComponent extends Component {
                                         <th>Название документа</th>
                                         <th>Тип документа</th>
                                         <th>Дата создания</th>
-                                        <th>Watch</th>
-                                        <th>Delete</th>
-                                        <th>Update</th>
+                                        <th>Просмотреть</th>
+                                        <th>Обновить</th>
+                                        <th>Удалить</th>
 
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {this.props.documents.map(document => {
+                                                
                                         return (
                                             <tr key={document.id}>
                                                 <td>{document.regNum}</td>
                                                 <td>{document.name}</td>
-                                                <td>{document.typeDocId}</td>
-                                                <td>{document.reg}</td>
+                                                <td>
+                                                    {document.typeDoc.name}
+                                                </td>
+                                                <td>{moment(document.reg).format('YYYY-MM-DD')}</td>
                                                 <td><button
                                                     className='btn btn-success'
                                                     onClick={() => this.watchDocumentClicked(document.id)}>
-                                                    Watch
+                                                    Просмотреть
                                                 </button>
                                                 </td>
                                                 <td><button
                                                     className='btn btn-warning'
                                                     onClick={() => this.updateDocumentClicked(document.id)}>
-                                                    Update
+                                                    Обновить
                                                 </button>
                                                 </td>
                                                 <td><button
                                                     className='btn btn-danger'
                                                     onClick={() => this.deleteDocumentClicked(document.id)}>
-                                                    Delete
+                                                    Удалить
                                                 </button>
                                                 </td>
                                             </tr>
@@ -107,7 +130,7 @@ export default class ListDocumentComponent extends Component {
                         <button
                             className='btn btn-success'
                             onClick={this.addDocumentClicked}>
-                            Add
+                            Добавить
                             </button>
                     </div>
                 </div>
