@@ -54,11 +54,12 @@ class TodoApp extends Component {
         this.refreshUnits = this.refreshUnits.bind(this);
         this.refreshTypes = this.refreshTypes.bind(this);
         this.refreshVids = this.refreshVids.bind(this);
+        this.serarchByParametr = this.serarchByParametr.bind(this);
     }
 
     refreshDocuments(searchParametr='') {
         this.setState({
-            selectedTab:'docunents'
+            selectedTab:'documents'
         });
         if(searchParametr === ''){
             DocumentDataService.retriveAllReadyDocuments()
@@ -77,76 +78,152 @@ class TodoApp extends Component {
         }
     }
 
-    refreshUsers(){
+    refreshUsers(searchParametr=''){
         this.setState({
             selectedTab:'users'
         });
-        UserDataService.retriveAllReadyUsers()
+        if(searchParametr === ''){
+            UserDataService.retriveAllReadyUsers()
             .then((response)=>{
                 this.setState({
                     users: response.data._embedded.employees
                 });
             });
+        } else {
+            UserDataService.retriveSearchUsersByFio(searchParametr)
+            .then((response)=>{
+                this.setState({
+                    users: response.data._embedded.employees
+                });
+            });
+        }
+        
     }
 
-    refreshOrganisations(){
+    refreshOrganisations(searchParametr=''){
         this.setState({
             selectedTab:'organisations'
         });
-        OrganisationsDataService.retriveAllOrganisations()
+        if(searchParametr === ''){
+            OrganisationsDataService.retriveAllOrganisations()
             .then((response)=>{
                 this.setState({
                     organisations: response.data._embedded.orgs
                 });
             });
+        } else {
+            OrganisationsDataService.retriveSearchOrganisationByName(searchParametr)
+            .then((response)=>{
+                this.setState({
+                    organisations: response.data._embedded.orgs
+                });
+            });
+        }
+        
     }
 
-    refreshPosts(){
+    refreshPosts(searchParametr=''){
         this.setState({
             selectedTab:'posts'
         });
-        PostsDataService.retriveAllPosts()
+        if(searchParametr === ''){
+            PostsDataService.retriveAllPosts()
             .then((response)=>{
                 this.setState({
                     posts: response.data._embedded.posts
                 });
             });
+        } else {
+            PostsDataService.retriveSearchPostsByName(searchParametr)
+            .then((response)=>{
+                this.setState({
+                    posts: response.data._embedded.posts
+                });
+            });
+        }
     }
 
-    refreshUnits(){
+    refreshUnits(searchParametr=''){
         this.setState({
             selectedTab:'units'
         });
-        UnitsDataService.retriveAllUnits()
+        if(searchParametr === ''){
+            UnitsDataService.retriveAllUnits()
             .then((response)=>{
                 this.setState({
                     units: response.data._embedded.units
                 });
             });
+        } else {
+            UnitsDataService.retriveSearchUnitsByName(searchParametr)
+            .then((response)=>{
+                this.setState({
+                    units: response.data._embedded.units
+                });
+            });
+        }
     }
 
-    refreshTypes(){
+    refreshTypes(searchParametr=''){
         this.setState({
             selectedTab:'types'
         });
-        TypesDataService.retriveAllTypes()
+        if(searchParametr === ''){
+            TypesDataService.retriveAllTypes()
             .then((response)=>{
                 this.setState({
                     types: response.data._embedded.types
                 });
             });
+        } else {
+            TypesDataService.retriveSearchTypesByName(searchParametr)
+            .then((response)=>{
+                this.setState({
+                    types: response.data._embedded.types
+                });
+            });
+        }
+        
     }
 
-    refreshVids(){
+    refreshVids(searchParametr=''){
         this.setState({
             selectedTab:'vids'
         });
-        VidsDataService.retriveAllVids()
+        if(searchParametr === ''){
+            VidsDataService.retriveAllVids()
             .then((response)=>{
                 this.setState({
                     vids: response.data._embedded.vids
                 });
             });
+        } else {
+            VidsDataService.retriveSearchVidsByName(searchParametr)
+            .then((response)=>{
+                this.setState({
+                    vids: response.data._embedded.vids
+                });
+            });
+        }
+        
+    }
+
+    serarchByParametr(searchParametr , selectedTab){
+        if(selectedTab === 'documents'){
+            this.refreshDocuments(searchParametr);
+        } else if(selectedTab === 'users') {
+            this.refreshUsers(searchParametr);
+        } else if(selectedTab === 'organisations'){
+            this.refreshOrganisations(searchParametr);
+        } else if(selectedTab === 'posts') {
+            this.refreshPosts(searchParametr);
+        } else if(selectedTab === 'units'){
+            this.refreshUnits(searchParametr);
+        } else if(selectedTab === 'types'){
+            this.refreshTypes(searchParametr);
+        } else if(selectedTab === 'vids'){
+            this.refreshVids(searchParametr);
+        }
     }
 
     render() {
@@ -154,7 +231,7 @@ class TodoApp extends Component {
             <div className='TodoApp'>
                 <Router basename={process.env.PUBLIC_URL}>
                     <>
-                        <HeaderComponent refreshDocuments={this.refreshDocuments}/>
+                        <HeaderComponent serarchByParametr={this.serarchByParametr} selectedTab={this.state.selectedTab}/>
                         <Switch>
                             <Route path='/' exact component={LoginComponent} />
                             <Route path='/login' component={LoginComponent} />

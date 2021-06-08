@@ -40,8 +40,8 @@ export default class ListDocumentComponent extends Component {
 
     render() {
 
-        return (
-            <div className='row'>
+        const vieu =
+        <div className='row'>
                 <div className='col-2' />
                 <div className='col-8' >
                     <div>
@@ -100,8 +100,13 @@ export default class ListDocumentComponent extends Component {
                 </div>
             </div>
 
+            const nothing = 
+            <div>
+                Ничего не найдено
+            </div>
 
-
+        return (
+            this.props.organisations.length ? vieu : nothing
         )
     }
 }

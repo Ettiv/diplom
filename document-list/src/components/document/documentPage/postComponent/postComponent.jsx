@@ -80,7 +80,7 @@ export default class PostComponent extends Component {
 
         return (
             <div>
-                <h1>Организация</h1>
+                <h1>Пост</h1>
                 <div className='container'>
                     <Formik initialValues={
                         {

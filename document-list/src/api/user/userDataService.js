@@ -14,6 +14,10 @@ class UserDataService {
         return axios.get(`${JPA_API_URL}/employees?projection=EmployeeFull`);
     }
 
+    retriveSearchUsersByFio(searchParametr){
+        return axios.get(`${JPA_API_URL}/employees/search/findByFio?fio=${searchParametr}&projection=EmployeeFull`);
+    }
+
     retriveAllUnits(){
         return axios.get(`${JPA_API_URL}/units`);
     }

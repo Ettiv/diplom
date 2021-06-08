@@ -9,6 +9,10 @@ class UnitsDataService {
     retriveAllUnits() {
         return axios.get(`${JPA_API_URL}/units`);
     }
+    
+    retriveSearchUnitsByName(searchParametr){
+        return axios.get(`${JPA_API_URL}/units/search/findByName?name=${searchParametr}`);
+    }
 
     deleteUnit(id) {
         return axios.delete(`${JPA_API_URL}/units/${id}`);

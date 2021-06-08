@@ -31,7 +31,7 @@ export default class LoginComponent extends Component {
             .executeJwtAuthentificationService(this.state.userName, this.state.password)
             .then((response) => {
                 AuthenticationService
-                .registerSuccessfulLoginForJwt(this.state.userName, response.data.token);
+                .registerSuccessfulLoginForJwt(this.state.userName, response.data.token, response.data.roles);
                 this.props.history.push(`/welcome/${this.state.userName}`);
             }).catch((e) => {
                 console.error(e);

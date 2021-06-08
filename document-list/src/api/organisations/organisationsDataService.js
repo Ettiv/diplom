@@ -10,6 +10,10 @@ class OrganisationsDataService {
         return axios.get(`${JPA_API_URL}/orgs`);
     }
 
+    retriveSearchOrganisationByName(searchParametr){
+        return axios.get(`${JPA_API_URL}/orgs/search/findByName?name=${searchParametr}`);        
+    }
+
     deleteOrganisation(id) {
         return axios.delete(`${JPA_API_URL}/orgs/${id}`);
     }

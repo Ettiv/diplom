@@ -10,6 +10,10 @@ class TypesDataService {
         return axios.get(`${JPA_API_URL}/types`);
     }
 
+    retriveSearchTypesByName(searchParametr){
+        return axios.get(`${JPA_API_URL}/types/search/findByName?name=${searchParametr}`);        
+    }
+
     deleteType(id) {
         return axios.delete(`${JPA_API_URL}/types/${id}`);
     }

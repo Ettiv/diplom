@@ -40,8 +40,8 @@ export default class PostsListComponent extends Component {
 
     render() {
 
-        return (
-            <div className='row'>
+        const vieu =
+        <div className='row'>
                 <div className='col-4' />
                 <div className='col-4' >
                     <div>
@@ -94,8 +94,14 @@ export default class PostsListComponent extends Component {
                 </div>
             </div>
 
+            const nothing = 
+            <div>
+                Ничего не найдено
+            </div>
 
 
+        return (
+            this.props.posts.length ? vieu : nothing
         )
     }
 }

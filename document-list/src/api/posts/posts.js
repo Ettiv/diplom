@@ -10,6 +10,10 @@ class PostsDataService {
         return axios.get(`${JPA_API_URL}/posts`);
     }
 
+    retriveSearchPostsByName(searchParametr){
+        return axios.get(`${JPA_API_URL}/posts/search/findByName?name=${searchParametr}`);        
+    }
+
     deletePost(id) {
         return axios.delete(`${JPA_API_URL}/posts/${id}`);
     }

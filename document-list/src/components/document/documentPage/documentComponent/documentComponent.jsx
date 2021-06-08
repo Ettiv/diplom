@@ -287,13 +287,11 @@ export default class DocumentComponent extends Component {
                                         className='alert alert-danger' />
 
                                     <fieldset className='form-group'>
-                                        <label>Описание</label>
-                                        <Field as='textarea' className='form-control '
-                                            rows='6'
+                                        <label>Ссылка на документ</label>
+                                        <Field className='form-control '
                                             type='text'
-                                            name='link' >
-                                            <textarea rows='8'/>                                            
-                                        </Field>
+                                            name='link'/>                                           
+                                        
 
                                     </fieldset>
 

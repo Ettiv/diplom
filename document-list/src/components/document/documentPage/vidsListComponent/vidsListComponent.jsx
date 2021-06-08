@@ -40,8 +40,8 @@ export default class VidsListComponent extends Component {
 
     render() {
 
-        return (
-            <div className='row'>
+        const vieu =
+        <div className='row'>
                 <div className='col-4' />
                 <div className='col-4' >
                     <div>
@@ -94,8 +94,13 @@ export default class VidsListComponent extends Component {
                 </div>
             </div>
 
+            const nothing =
+            <div>
+                Ничего не найдено
+            </div>
 
-
+        return (
+            this.props.vids.length ? vieu : nothing
         )
     }
 }

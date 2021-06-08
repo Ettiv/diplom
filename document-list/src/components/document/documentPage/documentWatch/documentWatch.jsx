@@ -52,12 +52,12 @@ export default class DocumentWatch extends Component {
                     <div className='col-8'>
                         <div className='container'>
                             <h5 className='text-left text-uppercase'>
-                                Тескт документа:
+                                Ссылка на документ:
                             </h5>
                         </div>
                         <div className='container text-left text-justify'>
                             <pre>
-                                {this.state.link}
+                                <a href={this.state.link} rel="noreferrer" target="_blank" >{this.state.link}</a>
                             </pre>                           
                         </div>
                         <br/>

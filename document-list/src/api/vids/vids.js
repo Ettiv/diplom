@@ -10,6 +10,10 @@ class VidsDataService {
         return axios.get(`${JPA_API_URL}/vids`);
     }
 
+    retriveSearchVidsByName(searchParametr){
+        return axios.get(`${JPA_API_URL}/vids/search/findByName?name=${searchParametr}`);    
+    }
+
     deleteVid(id) {
         return axios.delete(`${JPA_API_URL}/vids/${id}`);
     }

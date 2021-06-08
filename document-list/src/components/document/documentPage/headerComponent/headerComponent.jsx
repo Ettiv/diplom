@@ -49,14 +49,20 @@ class HeaderComponent extends Component {
                         {isUserloggedIn &&
                             <>
                                 <li>
-                                    <form className="form-inline my-2 my-lg-0 navbar-collapse justify-content-end">
+                                    <form className="form-inline my-2 my-lg-0 navbar-collapse justify-content-end"
+                                        onSubmit={(event) => {
+                                            event.preventDefault();
+                                            this.props.serarchByParametr(this.state.searchParametr, this.props.selectedTab);
+                                        }
+                                        }>
                                         <input className="form-control mr-sm-2" type="search" 
                                             placeholder="Поиск" 
                                             aria-label="Search" 
-                                            onChange={this.onChangeSearchParametr}/>
+                                            onChange={this.onChangeSearchParametr}
+                                        />
                                         <button className="btn btn-outline-success my-2 my-sm-0" 
-                                            type="button" 
-                                            onSubmit={() => this.props.refreshDocuments(this.setState.searchParametr)}>Поиск</button>
+                                            type="submit" 
+                                            >Поиск</button>
                                     </form>
                                 </li>
                                 <li>

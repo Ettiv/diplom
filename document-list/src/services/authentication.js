@@ -18,9 +18,9 @@ class AuthenticationService {
     }
 
 
-    registerSuccessfulLoginForJwt(userName, token) {
+    registerSuccessfulLoginForJwt(userName, token , role) {
         sessionStorage.setItem(USER_NAME_SESSION_ATTRIBUTE_NAME, userName);
-        sessionStorage.setItem(USERS_ROLES_SESSION_ATTRIBUTE_NAME, ['ROLE_USER', 'ROLE_ADMIN']);
+        sessionStorage.setItem(USERS_ROLES_SESSION_ATTRIBUTE_NAME, ['ROLE_USER', ...role]/*['ROLE_USER', 'ROLE_ADMIN']*/);
         this.setupAxiosInterceptors(this.createJwtToken(token));
     }
 
