@@ -82,6 +82,16 @@ export default class TypesListComponent extends Component {
                         </div>
                     </div>
                 </div>
+            </div>
+
+            const nothing =
+            <div  className='col-4'>
+                Ничего не найдено
+            </div>
+
+        return (
+            <div>
+                {this.props.types.length ? vieu : nothing}
                 <div className='col-4' >
                     <div className='container'>
                         <br /><br /><br /><br /><br />
@@ -93,14 +103,7 @@ export default class TypesListComponent extends Component {
                     </div>
                 </div>
             </div>
-
-            const nothing =
-            <div>
-                Ничего не найдено
-            </div>
-
-        return (
-            this.props.types.length ? vieu : nothing
+            
         )
     }
 }

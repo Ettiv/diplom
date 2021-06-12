@@ -82,6 +82,17 @@ export default class PostsListComponent extends Component {
                         </div>
                     </div>
                 </div>
+            </div>
+
+            const nothing = 
+            <div className='col-8'>
+                Ничего не найдено
+            </div>
+
+
+        return (
+            <div>
+                {this.props.posts.length ? vieu : nothing}
                 <div className='col-4' >
                     <div className='container'>
                         <br /><br /><br /><br /><br />
@@ -93,15 +104,7 @@ export default class PostsListComponent extends Component {
                     </div>
                 </div>
             </div>
-
-            const nothing = 
-            <div>
-                Ничего не найдено
-            </div>
-
-
-        return (
-            this.props.posts.length ? vieu : nothing
+            
         )
     }
 }

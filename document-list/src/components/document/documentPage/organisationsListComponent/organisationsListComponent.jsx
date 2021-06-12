@@ -88,6 +88,16 @@ export default class ListDocumentComponent extends Component {
                         </div>
                     </div>
                 </div>
+            </div>
+
+            const nothing = 
+            <div className='col-10'>
+                Ничего не найдено
+            </div>
+
+        return (
+            <div>
+                {this.props.organisations.length ? vieu : nothing}
                 <div className='col-2' >
                     <div className='container'>
                         <br /><br /><br /><br /><br />
@@ -99,14 +109,7 @@ export default class ListDocumentComponent extends Component {
                     </div>
                 </div>
             </div>
-
-            const nothing = 
-            <div>
-                Ничего не найдено
-            </div>
-
-        return (
-            this.props.organisations.length ? vieu : nothing
+            
         )
     }
 }

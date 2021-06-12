@@ -82,6 +82,16 @@ export default class UnitsListComponent extends Component {
                         </div>
                     </div>
                 </div>
+            </div>
+
+            const nothing = 
+            <div className='col-8'>
+                Ничего не найдено
+            </div>
+
+        return (
+            <div>
+                {this.props.units.length ? vieu : nothing}
                 <div className='col-4' >
                     <div className='container'>
                         <br /><br /><br /><br /><br />
@@ -92,15 +102,7 @@ export default class UnitsListComponent extends Component {
                             </button>
                     </div>
                 </div>
-            </div>
-
-            const nothing = 
-            <div>
-                Ничего не найдено
-            </div>
-
-        return (
-            this.props.units.length ? vieu : nothing
+            </div> 
         )
     }
 }

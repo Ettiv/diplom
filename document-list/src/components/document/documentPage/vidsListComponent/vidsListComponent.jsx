@@ -82,6 +82,16 @@ export default class VidsListComponent extends Component {
                         </div>
                     </div>
                 </div>
+            </div>
+
+            const nothing =
+            <div className='col-8'>
+                Ничего не найдено
+            </div>
+
+        return (
+            <div>
+                {this.props.vids.length ? vieu : nothing}
                 <div className='col-4' >
                     <div className='container'>
                         <br /><br /><br /><br /><br />
@@ -93,14 +103,6 @@ export default class VidsListComponent extends Component {
                     </div>
                 </div>
             </div>
-
-            const nothing =
-            <div>
-                Ничего не найдено
-            </div>
-
-        return (
-            this.props.vids.length ? vieu : nothing
         )
     }
 }

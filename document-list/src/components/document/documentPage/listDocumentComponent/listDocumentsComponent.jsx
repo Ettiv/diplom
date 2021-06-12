@@ -11,8 +11,8 @@ export default class ListDocumentComponent extends Component {
             message: null,
             types: [
                 {
-                    "id":0,
-                    "name":null
+                    "id": 0,
+                    "name": null
                 }
             ]
         }
@@ -65,8 +65,8 @@ export default class ListDocumentComponent extends Component {
     }
 
     render() {
-        const vieu = 
-        <div className='row'>
+        const vieu =
+            <div className='row'>
                 <div className='col-2' />
                 <div className='col-8' >
                     <div>
@@ -89,7 +89,7 @@ export default class ListDocumentComponent extends Component {
                                 </thead>
                                 <tbody>
                                     {this.props.documents.map(document => {
-                                                
+
                                         return (
                                             <tr key={document.id}>
                                                 <td>{document.regNum}</td>
@@ -124,25 +124,28 @@ export default class ListDocumentComponent extends Component {
                         </div>
                     </div>
                 </div>
-                <div className='col-2' >
+
+            </div>
+
+        const nothing = <div className='col-10'>
+            Ничего не найдено
+        </div>
+
+
+        return (
+            <div>
+                {this.props.documents.length ? vieu : nothing}
+                <div div className = 'col-2' >
                     <div className='container'>
                         <br /><br /><br /><br /><br />
                         <button
                             className='btn btn-success'
                             onClick={this.addDocumentClicked}>
                             Добавить
-                            </button>
+                        </button>
                     </div>
-                </div>
-            </div>
-        
-        const nothing = <div>
-            Ничего не найдено
-        </div>
-            
-        
-        return (
-            this.props.documents.length ? vieu : nothing
+                </div >
+            </div>            
         )
     }
 }
