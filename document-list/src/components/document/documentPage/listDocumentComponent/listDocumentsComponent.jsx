@@ -66,14 +66,12 @@ export default class ListDocumentComponent extends Component {
 
     render() {
         const vieu =
-            <div className='row'>
-                <div className='col-2' />
-                <div className='col-8' >
+            <div>
+                <div  >
                     <div>
                         <h1>Документы</h1>
                         {this.state.message ? <div className='alert alert-success'>{this.state.message}</div> : null}
                         <div className='container'>
-
                             <table className='table'>
                                 <thead>
                                     <tr>
@@ -127,14 +125,18 @@ export default class ListDocumentComponent extends Component {
 
             </div>
 
-        const nothing = <div className='col-10'>
+        const nothing = 
+        <div>
             Ничего не найдено
         </div>
 
 
         return (
-            <div>
-                {this.props.documents.length ? vieu : nothing}
+            <div className='row'>
+                <div className='col-2'/>
+                <div className='col-8'>
+                    {this.props.documents.length ? vieu : nothing}
+                </div>
                 <div div className = 'col-2' >
                     <div className='container'>
                         <br /><br /><br /><br /><br />

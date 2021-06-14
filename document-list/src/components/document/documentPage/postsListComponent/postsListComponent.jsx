@@ -41,9 +41,8 @@ export default class PostsListComponent extends Component {
     render() {
 
         const vieu =
-        <div className='row'>
-                <div className='col-4' />
-                <div className='col-4' >
+        <div>
+                <div>
                     <div>
                         <h1>Посты</h1>
                         {this.state.message ? <div className='alert alert-success'>{this.state.message}</div> : null}
@@ -85,14 +84,17 @@ export default class PostsListComponent extends Component {
             </div>
 
             const nothing = 
-            <div className='col-8'>
+            <div>
                 Ничего не найдено
             </div>
 
 
         return (
-            <div>
-                {this.props.posts.length ? vieu : nothing}
+            <div  className='row'>
+                <div className='col-4' />
+                <div  className='col-4' >
+                    {this.props.posts.length ? vieu : nothing}
+                </div>
                 <div className='col-4' >
                     <div className='container'>
                         <br /><br /><br /><br /><br />

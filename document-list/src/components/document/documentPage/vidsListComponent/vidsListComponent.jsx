@@ -41,9 +41,8 @@ export default class VidsListComponent extends Component {
     render() {
 
         const vieu =
-        <div className='row'>
-                <div className='col-4' />
-                <div className='col-4' >
+        <div>
+                <div>
                     <div>
                         <h1>Виды</h1>
                         {this.state.message ? <div className='alert alert-success'>{this.state.message}</div> : null}
@@ -85,13 +84,16 @@ export default class VidsListComponent extends Component {
             </div>
 
             const nothing =
-            <div className='col-8'>
+            <div>
                 Ничего не найдено
             </div>
 
         return (
-            <div>
-                {this.props.vids.length ? vieu : nothing}
+            <div  className='row'>
+                <div className='col-4' />
+                <div  className='col-4' >
+                    {this.props.vids.length ? vieu : nothing}
+                </div>
                 <div className='col-4' >
                     <div className='container'>
                         <br /><br /><br /><br /><br />
