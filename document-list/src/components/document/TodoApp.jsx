@@ -233,6 +233,7 @@ class TodoApp extends Component {
                     <>
                         <HeaderComponent serarchByParametr={this.serarchByParametr} selectedTab={this.state.selectedTab}/>
                         <Switch>
+                            <Route path='/index.html' exact component={LoginComponent} />
                             <Route path='/' exact component={LoginComponent} />
                             <Route path='/login' component={LoginComponent} />
                             <AutfinticatedRoute role = 'ROLE_USER' path='/welcome/:name' component={WelcomeComponent} />
